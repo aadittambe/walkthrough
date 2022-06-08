@@ -1,0 +1,1230 @@
+id,name,type
+0160999,Abbeville County School District,district
+0201999,Aiken County Public School District,district
+0301999,Allendale County Schools,district
+0401999,Anderson School District One,district
+0402999,Anderson School District Two,district
+0403999,Anderson School District Three,district
+0404999,Anderson District 4,district
+0405999,Anderson School District Five,district
+0501999,Bamberg School District 1,district
+0502999,Bamberg School District 2,district
+0619999,Barnwell School District 19,district
+0629999,Williston School District (Barnwell 29),district
+0645999,Barnwell School District 45,district
+0701999,Beaufort County School District,district
+0801999,Berkeley County School District,district
+0901999,Calhoun County Schools,district
+1001999,Charleston County School District,district
+1101999,Cherokee County School District 1,district
+1201999,Chester County School District,district
+1301999,Chesterfield County School District,district
+1401999,Clarendon 1,district
+1402999,Clarendon School District Two,district
+1403999,Clarendon 3,district
+1501999,Colleton County School District,district
+1601999,Darlington County School District,district
+1703999,Dillon School District Three,district
+1704999,Dillon School District Four,district
+1802999,Dorchester School District Two,district
+1804999,Dorchester District Four,district
+1901999,Edgefield County School District,district
+2001999,Fairfield County School District,district
+2101999,Florence One Schools,district
+2102999,Florence County School District 2,district
+2103999,Florence School District Three,district
+2104999,Florence 4,district
+2105999,Florence School District Five,district
+2201999,Georgetown County School District,district
+2301999,The School District Of Greenville County,district
+2450999,Greenwood School District 50,district
+2451999,Ware Shoals School District 51,district
+2452999,Greenwood School District 52,district
+2501999,Hampton District One,district
+2502999,Hampton 2,district
+2601999,Horry County Schools,district
+2701999,Jasper County School District,district
+2801999,Kershaw County School District,district
+2901999,Lancaster,district
+3055999,Laurens County School District 55,district
+3056999,Laurens County School District 56,district
+3101999,Lee County School District,district
+3201999,Lexington County School District One,district
+3202999,Lexington School District Two,district
+3203999,Lexington County School District Three,district
+3204999,Lexington School District Four,district
+3205999,School District Five Of Lexington & Richland Count,district
+3301999,Mccormick County School District,district
+3410999,Marion County School District,district
+3501999,Marlboro County School District,district
+3601999,School District Of Newberry County,district
+3701999,School District Of Oconee County,district
+3809999,Orangeburg County School District,district
+3901999,School District Of Pickens County,district
+4001999,Richland School District One,district
+4002999,Richland School District Two,district
+4101999,Saluda,district
+4201999,Spartanburg School District One,district
+4202999,Spartanburg School District Two,district
+4203999,Spartanburg School District Three,district
+4204999,Spartanburg School District Four,district
+4205999,Spartanburg School District 5,district
+4206999,Spartanburg County School District Six,district
+4207999,Spartanburg School District Seven,district
+4301999,Sumter Schools,district
+4401999,Union County Schools,district
+4501999,Williamsburg County School District,district
+4601999,York School District One,district
+4602999,Clover School District (York 2),district
+4603999,Rock Hill School District (York 3),district
+4604999,Fort Mill School District - York 4,district
+4701999,South Carolina Public Charter School District,district
+4801999,Charter Institute At Erskine,district
+5205999,Governor's School For Agriculture At John De La Howe,district
+5207999,SC School For The Deaf And The Blind,district
+5364999,SC Governor's School For The Arts And Humanities,district
+5395999,SC Governor's School for Science and Mathematics,district
+0160001,Abbeville High School,school
+0160003,Dixie High School,school
+0160007,John C. Calhoun Elementary School,school
+0160016,Wright Middle School,school
+0160017,Westwood Elementary,school
+0160018,Cherokee Trail Elementary,school
+0160019,Diamond Hill Elementary,school
+0201001,Silver Bluff High School,school
+0201002,Aiken High School,school
+0201003,South Aiken High School,school
+0201005,Jefferson Elementary,school
+0201006,Midland Valley High School,school
+0201007,Paul Knox Middle School,school
+0201008,Langley-Bath-Clearwater Middle School,school
+0201009,Leavelle Mccampbell Middle School,school
+0201010,New Ellenton Middle Steam Magnet School,school
+0201011,North Augusta Middle School,school
+0201012,North Augusta High School,school
+0201015,Wagener-Salley High School,school
+0201016,Aiken Elementary School,school
+0201017,Kennedy Middle School,school
+0201019,Belvedere Elementary School,school
+0201021,Byrd Elementary,school
+0201022,J.D. Lever Elementary,school
+0201024,Clearwater Elementary,school
+0201027,East Aiken School Of The Arts,school
+0201028,Schofield Middle School,school
+0201029,Gloverville Elementary School,school
+0201030,Greendale Elementary,school
+0201031,Hammond Hill Elementary,school
+0201033,Jackson Magnet Middle School,school
+0201035,Millbrook Elementary,school
+0201038,North Aiken Elementary School,school
+0201039,North Augusta Elementary School,school
+0201051,Cyril B. Busbee Elementary School,school
+0201052,Warrenville Elementary,school
+0201054,Oakwood-Windsor Elementary,school
+0201055,Redcliffe Elementary School,school
+0201056,Chukker Creek Elementary School,school
+0201058,Mossy Creek Elementary School,school
+0201059,Ridge Spring-Monetta Elementary School,school
+0201060,Ridge Spring-Monetta High School,school
+0201061,Aiken Scholars Academy,school
+0201062,Ridge Spring-Monetta Middle School,school
+0201063,A. L. Corbett Middle School,school
+0201066,Graniteville Elementary,school
+0201067,Aiken Intermediate School,school
+0201601,Lloyd-Kennedy Charter,school
+0301001,Allendale Fairfax High School,school
+0301004,Allendale Elementary School,school
+0301008,Allendale-Fairfax Middle School,school
+0401001,Palmetto High School,school
+0401002,Powdersville High School,school
+0401003,Wren High School,school
+0401004,Palmetto Elementary,school
+0401005,Cedar Grove Elementary,school
+0401008,Wren Middle School,school
+0401009,West Pelzer Elementary School,school
+0401011,Spearman Elementary,school
+0401012,Palmetto Middle School,school
+0401013,Wren Elementary,school
+0401014,Hunt Meadows Elementary School,school
+0401061,Powdersville Middle School,school
+0401062,Powdersville Elementary School,school
+0402012,Belton-Honea Path High School,school
+0402013,Belton Elementary School,school
+0402014,Belton Middle School,school
+0402018,Honea Path Elementary School,school
+0402019,Honea Path Middle School,school
+0402021,Wright Elementary School,school
+0403022,Crescent High School,school
+0403024,Iva Elementary School,school
+0403025,Starr-Iva Middle School,school
+0403026,Starr Elementary,school
+0403027,Flat Rock Elementary,school
+0404027,Pendleton High School,school
+0404029,Riverside Middle School,school
+0404031,La France Elementary School,school
+0404034,Pendleton Elementary School,school
+0404036,Townville Elementary,school
+0404037,Mount Lebanon Elementary School,school
+0405038,T. L. Hanna High,school
+0405040,Mccants Middle School,school
+0405044,Centerville Elementary School,school
+0405045,Concord Elementary,school
+0405048,Westside High School,school
+0405050,Nevitt Forest Elementary School,school
+0405051,New Prospect Elementary School,school
+0405055,Varennes Elementary School,school
+0405059,Whitehall Elementary School,school
+0405060,Calhoun Academy Of The Arts,school
+0405061,Midway Elementary School,school
+0405062,Mclees Elementary,school
+0405063,Robert Anderson Middle School,school
+0405064,Glenview Middle School,school
+0405065,Southwood Academy Of The Arts,school
+0405066,North Pointe Elementary School,school
+0405601,Anderson Five Charter School,school
+0501001,Bamberg-Ehrhardt High School,school
+0501002,Bamberg-Ehrhardt Middle School,school
+0501006,Richard Carroll Elementary,school
+0502007,Denmark Olar High School,school
+0502008,Denmark Olar Middle School,school
+0502010,Denmark Olar Elementary,school
+0619001,Blackville Hilda High School,school
+0619003,Macedonia Elementary/Middle School,school
+0629006,Williston-Elko High School,school
+0629007,Kelly Edwards Elementary School,school
+0629008,Williston Elko Middle School,school
+0645009,Barnwell High School,school
+0645010,Guinyard Butler Middle,school
+0645012,Barnwell Elementary School,school
+0701001,Lady's Island Middle School,school
+0701002,Beaufort High School,school
+0701003,Hilton Head Island High School,school
+0701004,"Battery Creek High School, Beaufort County School District",school
+0701008,Beaufort Elementary School,school
+0701009,Hilton Head Island Middle School,school
+0701010,Broad River Elementary School,school
+0701014,Lady's Island Elementary,school
+0701015,Mossy Oaks Elementary School,school
+0701016,Port Royal Elementary School,school
+0701017,Michael C. Riley Elementary And Early Childhood Center,school
+0701020,St. Helena Elementary School,school
+0701022,Joseph S. Shanklin Elementary,school
+0701023,Whale Branch Elementary,school
+0701024,Bluffton Elementary,school
+0701025,Coosa Elementary School,school
+0701026,H. E. Mccracken Middle School,school
+0701027,Whale Branch Middle School,school
+0701028,Beaufort Middle School,school
+0701029,Okatie Elementary,school
+0701030,Bluffton High School,school
+0701032,Hilton Head Island Elementary School For The Creative Arts,school
+0701033,Hilton Head Island Elementary School,school
+0701034,Red Cedar Elementary,school
+0701035,Bluffton Middle School,school
+0701036,Whale Branch Early College High School,school
+0701037,Pritchardville Elementary School,school
+0701038,River Ridge Academy,school
+0701039,May River High,school
+0701040,Robert Smalls International Academy,school
+0701601,Riverview Charter School,school
+0801001,Stratford High,school
+0801002,Berkeley High,school
+0801006,Cross High School,school
+0801007,Goose Creek High,school
+0801008,Hanahan High,school
+0801012,Berkeley Middle School,school
+0801014,Boulder Bluff Elementary School,school
+0801015,Cainhoy Elementary School,school
+0801016,Cross Elementary,school
+0801017,College Park Elementary School,school
+0801020,J. K. Gourdin Elementary,school
+0801021,Hanahan Middle,school
+0801022,Westview Middle School,school
+0801024,H. E. Bonner Elementary,school
+0801027,Sedgefield Middle School,school
+0801028,St. Stephen Elementary,school
+0801029,St. Stephen Middle School,school
+0801030,Whitesville Elementary School,school
+0801031,Westview Elementary School,school
+0801032,College Park Middle,school
+0801033,Marrington Elementary School,school
+0801034,Marrington Middle School Of The Arts,school
+0801036,Howe Hall Arts Infused Magnet School,school
+0801037,Macedonia Middle,school
+0801038,Sangaree Intermediate School,school
+0801039,Devon Forest Elementary School,school
+0801040,Mount Holly Elementary,school
+0801041,Berkeley Intermediate School,school
+0801043,Timberland High School,school
+0801044,Hanahan Elementary School,school
+0801046,Goose Creek Elementary,school
+0801047,Sangaree Middle School,school
+0801048,Daniel Island School,school
+0801049,Cane Bay High School,school
+0801050,Cane Bay Elementary School,school
+0801051,Berkeley County Middle College High,school
+0801052,Cane Bay Middle School,school
+0801053,Nexton Elementary,school
+0801054,Philip Simmons Elementary,school
+0801055,Philip Simmons Middle School,school
+0801056,Philip Simmons High School,school
+0801057,Bowen's Corner Elementary,school
+0801058,Foxbank Elementary School,school
+0901001,Calhoun County High School,school
+0901008,Sany Run School,school
+0901009,St. Matthews K8,school
+1001001,Baptist Hill Middle High School,school
+1001002,North Charleston High,school
+1001010,Burke High,school
+1001014,Wando High,school
+1001018,Military Magnet Academy,school
+1001020,St. Johns High,school
+1001022,R.B. Stall High,school
+1001030,Northwoods Middle,school
+1001033,Chicora Elementary,school
+1001036,A.C. Corcoran Elementary,school
+1001039,Jane Edwards Elementary,school
+1001042,W.B. Goodwin Elementary,school
+1001043,Harbor View Elementary,school
+1001044,Haut Gap Middle School,school
+1001045,Minnie Hughes Elementary,school
+1001046,Hunley Park Elementary,school
+1001050,Ladson Elementary,school
+1001051,Laing Middle,school
+1001052,Lambs Elementary,school
+1001056,St. James Santee Elementary-Middle,school
+1001057,Memminger Elementary,school
+1001059,E.B. Ellington Elementary,school
+1001060,Mitchell Elementary,school
+1001061,Jennie Moore Elementary,school
+1001062,Morningside Middle,school
+1001063,Mt. Pleasant Academy,school
+1001065,Moultrie Middle,school
+1001066,Murray-Lasaine Montessori,school
+1001067,North Charleston Elementary,school
+1001068,Oakland Elementary,school
+1001070,Malcolm C. Hursey Montessori,school
+1001072,Matilda F. Dunston Elementary,school
+1001075,Edith L. Frierson Elementary,school
+1001076,Sanders-Clyde Elementary,school
+1001077,Pepperhill Elementary,school
+1001079,James Simons Montessori,school
+1001081,Springfield Elementary,school
+1001082,St. Andrew's School Of Math And Science,school
+1001083,Angel Oak Elementary,school
+1001084,Stiles Point Elementary,school
+1001085,Stono Park Elementary,school
+1001086,Sullivan's Island Elementary,school
+1001090,Mamie P. Whitesides Elementary,school
+1001091,Ashley River Creative Arts Elementary,school
+1001092,C. E. Williams Middle School For Creative And Scientific Arts,school
+1001093,James B. Edwards Elementary,school
+1001094,Buist Academy,school
+1001095,Mt. Zion Elementary,school
+1001096,Belle Hall Elementary,school
+1001098,Charleston School Of The Arts,school
+1001099,Academic Magnet High,school
+1001101,Charleston Progressive,school
+1001102,Charles Pinckney Elementary,school
+1001103,Thomas C. Cario Middle,school
+1001104,West Ashley High,school
+1001107,James Island Elementary,school
+1001109,Drayton Hall Elementary,school
+1001111,Jerry Zucker Middle School Of Science,school
+1001112,Pinehurst Elementary,school
+1001113,Montessori Community School,school
+1001114,North Charleston Creative Arts Elementary,school
+1001115,Simmons Pinckney Middle,school
+1001116,Deer Park Middle,school
+1001117,Carolina Park Elementary,school
+1001118,Camp Road Middle,school
+1001121,Lucy Garrett Beckham High,school
+1001200,Meeting Street Elementary,school
+1001612,Charleston Development Academy,school
+1001614,East Cooper Montessori Charter,school
+1001615,Greg Mathis Charter High,school
+1001616,James Island Charter High,school
+1001618,Orange Grove Charter School,school
+1001620,Charleston Charter School For Math And Science,school
+1001628,Pattison's Academy For Comprehensive Education,school
+1001629,Carolina Voyager Charter,school
+1001630,Allegro Charter School Of Music,school
+1101001,Blacksburg High School,school
+1101002,John E. Ewing Middle School,school
+1101003,Gaffney High School,school
+1101005,Alma Elementary School,school
+1101007,Blacksburg Middle School,school
+1101009,Corinth Elementary School,school
+1101010,Draytonville Elementary School,school
+1101011,Mary Bramlett Elementary School,school
+1101012,Goucher Elementary School,school
+1101015,B. D. Lee Elementary School,school
+1101019,Luther Vaughan Elementary,school
+1101020,Blacksburg Elementary School,school
+1101021,Limestone Central Elementary School,school
+1101022,Grassy Pond Elementary,school
+1101023,Northwest Eelemntary School,school
+1101024,Gaffney Middle School,school
+1201002,Chester High School,school
+1201004,Chester Middle School,school
+1201005,Great Falls High School,school
+1201006,Lewisville High School,school
+1201008,Lewisville Middle School,school
+1201011,Great Falls Elementary School,school
+1201014,Lewisville Elementary School,school
+1201018,Chester Park Elementary School Of Inquiry,school
+1201020,Chester Park Elementary School Of The Arts,school
+1201021,Chester Park Center Of Literacy Through Technology,school
+1201601,The Academy For Teaching And Learning,school
+1301001,Cheraw High School,school
+1301002,Chesterfield High School,school
+1301005,Long Middle School,school
+1301006,Mcbee High School,school
+1301007,Central High School,school
+1301008,New Heights Middle School,school
+1301014,Edwards Elementary School,school
+1301015,Jefferson Elementary School,school
+1301020,Mcbee Elementary,school
+1301021,Plainview Elementary School,school
+1301023,Ruby Elementary School,school
+1301026,Cheraw Intermediate School,school
+1301027,Pageland Elementary,school
+1301028,Chesterfield-Ruby Middle School,school
+1401001,Scott's Branch High,school
+1401005,Dr. Rose H.Wilder Elementary,school
+1401020,Scott's Branch Middle,school
+1402007,Manning High School,school
+1402011,Manning Jr. High School,school
+1402013,Manning Elementary School,school
+1403016,East Clarendon Middle / High School,school
+1403019,Walker Gamble Elementary School,school
+1501005,Colleton County High School,school
+1501006,Bells Elementary School,school
+1501011,Cottageville Elementary School,school
+1501012,Forest Hills Elementary School,school
+1501020,Northside Elementary School,school
+1501021,Hendersonville Elementary School,school
+1501022,Colleton County Middle School,school
+1601004,Hartsville Middle School,school
+1601005,Hartsville High School,school
+1601006,Lamar High School,school
+1601010,Spaulding Middle School,school
+1601013,Brockington Elementary Magnet School,school
+1601015,Carolina Elementary School,school
+1601017,North Hartsville Elementary,school
+1601020,Rosenwald Elementary/Middle School,school
+1601026,St. John's Elementary School,school
+1601027,Thornwell School For The Arts,school
+1601030,Darlington High School,school
+1601031,Darlington Middle School,school
+1601033,"Mayo High School For Math, Science & Technology",school
+1601034,J. L. Cain Elementary,school
+1601036,Bay Road Elementary School,school
+1601037,Lamar-Spaulding Elementary School,school
+1703019,Latta High School,school
+1703021,Latta Middle School,school
+1703024,Latta Elementary School,school
+1704002,Lake View High School,school
+1704003,Lake View Elementary School,school
+1704005,Dillon High School,school
+1704009,Gordon Elementary School,school
+1704010,Dillon Middle School,school
+1802006,Summerville High School,school
+1802007,Knightsville Elementary School,school
+1802009,Summerville Elementary School,school
+1802010,James H. Spann Elementary School,school
+1802011,Alston Middle School,school
+1802012,Rollings Middle School Of The Arts,school
+1802013,Newington Elementary School,school
+1802014,Flowertown Elementary School,school
+1802016,Charles Dubose Middle School,school
+1802017,Oakbrook Elementary School,school
+1802018,Oakbrook Middle School,school
+1802019,Windsor Hill Arts Infused Elementary,school
+1802020,Fort Dorchester High School,school
+1802021,Beech Hill Elementary School,school
+1802022,Gregg Middle School,school
+1802023,Fort Dorchester Elementary School,school
+1802024,Eagle Nest Elementary School,school
+1802025,William Reeves Elementary,school
+1802026,River Oaks Middle School,school
+1802027,Ashley Ridge High School,school
+1802028,Joseph R. Pye Elementary,school
+1802029,Sand Hill Elementary School,school
+1802030,Dr. Eugene Sires Elementary,school
+1802031,Alston-Bailey Elementary,school
+1804016,Harleyville Elementary School,school
+1804017,St. George Middle School,school
+1804018,Williams Memorial Elementary School,school
+1804019,Woodland High School,school
+1804021,Clay Hill Elementary School,school
+1804022,Harleyville-Ridgeville Middle School,school
+1901002,Strom Thurmond High School,school
+1901003,Douglas Elementary School,school
+1901005,Johnston Elementary School,school
+1901007,W. E. Parker Elementary School,school
+1901008,Merriwether Elementary School,school
+1901009,Johnston-Edegfield-Trenton Middle School,school
+1901010,Merriwether Middle School,school
+2001001,Fairfield Middle School,school
+2001008,Kelly Miller Elementary School,school
+2001009,Mccrorey-Liston School Of Technology,school
+2001012,Geiger Elementary,school
+2001013,Fairfield Central High School,school
+2001014,Fairfield Elementary School,school
+2001015,Fairfield Magnet School For Math And Science,school
+2101002,John W. Moore Middle School,school
+2101004,South Florence High School,school
+2101005,Williams Middle School,school
+2101006,Wilson High School,school
+2101008,Briggs Elementary School,school
+2101009,Carver Elementary Magnet School,school
+2101010,Delmae Heights Elementary School,school
+2101011,Greenwood Elementary School,school
+2101012,Mclaurin Elementary,school
+2101013,Theodore Lester Elementary,school
+2101014,West Florence Hs,school
+2101016,North Vista Elementary,school
+2101017,Royall Elementary School,school
+2101018,Savannah Grove Elementary School,school
+2101019,Dewey L. Carter Elementary School,school
+2101020,Henry Timrod Elementary School,school
+2101021,Wallace Gregg Elementary,school
+2101022,Southside Middle School,school
+2101050,Henry L. Sneed Middle,school
+2101051,Lucy T. Davis Elementary School,school
+2101600,Palmetto Youth Academy Charter,school
+2102024,Hannah - Pamplico High School,school
+2102028,Hannah-Pamplico Elementary/Middle Schoo,school
+2103029,Lake City High School,school
+2103036,J. C. Lynch Elementary School,school
+2103037,Olanta Creative Arts And Science Magnet School,school
+2103039,Scranton Elementary Steam Academy,school
+2103051,Main Street Elementary,school
+2103053,Florence School District 3; Dr. Ronald E. Mcnair Junior High Scho,school
+2103054,J. Paul Truluck Creative Arts And Science Magnet School,school
+2104041,Timmonsville High,school
+2104042,Johnson Middle,school
+2104043,Brockington Elementary,school
+2105045,Johnsonville High School,school
+2105047,Johnsonville Elementary School,school
+2105049,Johnsonville Middle School,school
+2201001,Andrews High School,school
+2201004,Georgetown High,school
+2201008,Andrews Elementary School,school
+2201009,Brown's Ferry Elementary School,school
+2201012,Pleasant Hill Elementary School,school
+2201013,Georgetown Middle School,school
+2201014,Kensington Elementary School,school
+2201015,Maryville Elementary,school
+2201016,Mcdonald Elementary School,school
+2201020,Plantersville Elementary,school
+2201022,Rosemary Middle School,school
+2201023,Sampit Elementary,school
+2201025,Waccamaw High School,school
+2201026,Carver Bay High School,school
+2201027,Carvers Bay Middle,school
+2201028,Waccamaw Middle School,school
+2201029,Waccamaw Intermediate School,school
+2201601,Coastal Montessori Charter,school
+2301002,Berea High School,school
+2301003,Blue Ridge High School,school
+2301005,Carolina High School,school
+2301006,Eastside High,school
+2301008,"Greenville Senior High Academy Of Law, Finance And Business",school
+2301009,Greer High School,school
+2301010,Wade Hampton High School,school
+2301011,Hillcrest Middle School,school
+2301012,Hillcrest High School,school
+2301013,J. L. Mann High School,school
+2301014,Mauldin High School,school
+2301017,Riverside High School,school
+2301018,Southside High School,school
+2301020,Travelers Rest High School,school
+2301023,Woodmont High School,school
+2301024,Bryson Middle,school
+2301027,Gateway Elementary School,school
+2301028,Alexander Elementary,school
+2301029,Beck International Academy,school
+2301030,Brook Glenn Elementary School,school
+2301031,Armstrong Elementary,school
+2301034,Augusta Circle Elementary,school
+2301036,Berea Elementary School,school
+2301037,Bethel Elementary School,school
+2301038,Blythe Academy,school
+2301039,Brushy Creek Elementary School,school
+2301040,Bryson Elementary School,school
+2301042,Berea Middle School,school
+2301043,Sue Cleveland Elementary School,school
+2301044,Sara Collins Elementary,school
+2301046,Plain Elementary School,school
+2301047,Crestview Elementary School,school
+2301051,Duncan Chapel Elementary,school
+2301052,Woodmont Middle School,school
+2301054,East North Street Academy,school
+2301057,Fork Shoals School,school
+2301058,Fountain Inn Elementary School,school
+2301059,Greenville Middle Academy Of Traditional & Global Studies,school
+2301060,Greer Middle School,school
+2301061,Hollis Academy,school
+2301062,Hughes Academy Of Science And Technology,school
+2301063,Lake Forest Elementary School,school
+2301066,Lakeview Middle School,school
+2301067,Mauldin Elementary School,school
+2301068,Mitchell Road Elementary,school
+2301069,Monaview Elementary School,school
+2301071,Mountain View Elementary,school
+2301074,Northwood Middle School,school
+2301076,Paris Elementary School,school
+2301077,Northwest Middle,school
+2301078,League Academy Of Communication Arts,school
+2301079,Pelham Road Elementary,school
+2301081,Simpsonville Elementary School,school
+2301083,Skyland Elementary School,school
+2301084,Slater Marietta Elementary School,school
+2301085,Stone Academy Of Communication Arts,school
+2301086,Sevier Middle School,school
+2301087,Summit Drive Elementary,school
+2301088,Tanglewood Middle School,school
+2301089,Taylors Elementary School,school
+2301090,Tigerville Elementary,school
+2301093,Buena Vista Elementary,school
+2301095,Welcome Elementary,school
+2301098,Westcliffe Elementary,school
+2301099,Woodland Elementary,school
+2301100,Ellen Woodside,school
+2301101,Greenbrier Elementary,school
+2301104,Grove Elementary School,school
+2301106,Blue Ridge Middle School ,school
+2301107,Heritage Elementary School,school
+2301108,Oakview Elementary School,school
+2301109,Chandler Creek Elementary School,school
+2301110,Mauldin Middle School,school
+2301111,Riverside Middle School,school
+2301112,Bell's Crossing,school
+2301113,Robert E. Cashion Elementary,school
+2301114,Cherrydale Elementary,school
+2301115,Thomas E. Kerns Elementary School,school
+2301116,Sterling School,school
+2301117,Rudolph Gordon School At Jones Mill,school
+2301118,Ralph Chandler Middle,school
+2301119,A.J. .Whittenberg Elementary School Of Engineering,school
+2301120,Monarch,school
+2301121,Dr. Phinnize J. Fisher Middle School,school
+2301612,Langston Charter Middle School,school
+2301902,Washington Center School,school
+2450001,Emerald High School,school
+2450002,Greenwood High School,school
+2450003,Northside Middle School,school
+2450008,Eleanor S. Rice Elementary School,school
+2450009,Lakeview Elementary School,school
+2450011,Mathews Elementary School,school
+2450012,Merrywood Elementary,school
+2450014,Pinecrest Elementary School,school
+2450016,Hodges Elementary School,school
+2450017,Brewer Middle School,school
+2450018,Woodfields Elementary,school
+2450028,Dr. Benjamin E. Mays Elementary School,school
+2450029,Westview Middle School,school
+2451020,Ware Shoals High School,school
+2451022,Ware Shoals Primary School,school
+2451024,Ware Shoals Elementary Middle School,school
+2452025,Ninety Six High School,school
+2452026,Edgewood Middle School,school
+2452027,Ninety Six Elementary School,school
+2501001,Wade Hampton High School,school
+2501004,Brunson Elementary School,school
+2501006,Hampton Elementary School,school
+2501008,North District Middle School,school
+2501010,Fennell Elementary School,school
+2502011,Estill High School,school
+2502014,Estill Middle,school
+2502017,Estill Elementary,school
+2601001,Aynor High School,school
+2601002,North Myrtle Beach High Shool,school
+2601004,Conway High School,school
+2601006,Green Sea Floyds High School,school
+2601008,Loris High School,school
+2601010,Myrtle Beach High School,school
+2601011,Socastee High School,school
+2601013,Whittemore Park Middle,school
+2601014,Aynor Elementary School,school
+2601016,Myrtle Beach Middle School,school
+2601017,Conway Middle School,school
+2601021,Daisy Elementary,school
+2601023,Green Sea Floyds Elementary School,school
+2601025,Homewood Elementary,school
+2601027,Loris Middle School,school
+2601028,Kingston Elementary,school
+2601029,Lakewood Elementary School,school
+2601030,St James Elementary School,school
+2601032,Loris Elementary,school
+2601033,Midland Elementary School,school
+2601036,Conway Elementary School,school
+2601037,North Myrtle Beach Middle School,school
+2601039,Pee Dee Elementary,school
+2601042,Waccamaw Elementary School,school
+2601045,South Conway Elementary,school
+2601046,Forestbrook Elementary,school
+2601047,St. James Middle School,school
+2601049,Carolina Forest Elementary School,school
+2601050,Seaside Elementary School,school
+2601051,Forestbrook Middle School,school
+2601052,Carolina Forest High School,school
+2601054,Socastee Elementary,school
+2601056,Palmetto Bays Elementary,school
+2601057,Aynor Middle School,school
+2601058,St. James High School,school
+2601060,Ocean Bay Elementary,school
+2601061,Ocean Bay Middle School,school
+2601062,Black Water Middle School,school
+2601063,Burgess Elementary School,school
+2601064,Hcs Early College High School,school
+2601065,River Oaks Elementary School,school
+2601066,Ocean Drive Elementary School,school
+2601067,Waterway Elementary,school
+2601068,Riverside Elementary,school
+2601069,Socastee Middle School,school
+2601070,Ten Oaks Middle School,school
+2601071,St. James Intermediate School Year,school
+2601074,Myrtle Beach Elementary,school
+2601075,Hcs Scholars Academy High School,school
+2601601,Bridgewater Academy Charter,school
+2601602,Palmetto Academy Of Learning And Success Charter,school
+2601603,Academy Of Hope Charter,school
+2601604,Palmetto Academy Of Learning Motorsports (Palm),school
+2701010,Hardeeville Elementary School,school
+2701011,Ridgeland Elementary School,school
+2701012,Hardeeville-Ridgeland Middle School,school
+2701013,Ridgeland-Hardeeville High School,school
+2801003,North Central High School,school
+2801005,Camden High School,school
+2801007,Lugoff-Elgin High School,school
+2801010,Baron Dekalb Elementary School,school
+2801011,Bethune Elementary,school
+2801012,Blaney Elementary School,school
+2801013,Jackson School,school
+2801014,Camden Middle School,school
+2801015,Camden Elementary School,school
+2801016,Lugoff-Elgin Middle School,school
+2801018,Lugoff Elementary School,school
+2801019,Midway Elementary School,school
+2801020,Mt. Pisgah Elementary,school
+2801021,Pine Tree Hill Elementary,school
+2801022,Wateree Elementary,school
+2801023,Leslie M. Stover Middle School,school
+2801024,Doby's Mill Elementary,school
+2801025,North Central Middle School,school
+2901002,Buford High School,school
+2901003,A. R. Rucker Middle School,school
+2901006,Indian Land High,school
+2901007,Andrew Jackson High School,school
+2901008,Lancaster High School,school
+2901010,South Middle,school
+2901011,Brooklyn Springs Elementary,school
+2901012,Buford Elementary School,school
+2901014,North Elementary School,school
+2901015,Clinton Elementary School,school
+2901017,Erwin Elementary School,school
+2901019,Heath Springs Elementary School,school
+2901021,Indian Land Elementary School,school
+2901023,Kershaw Elementary School,school
+2901024,Mcdonald Green Elementary,school
+2901027,Andrew Jackson Middle School,school
+2901028,Buford Middle,school
+2901029,Indian Land Middle School,school
+2901030,Harrisburg Elementary School,school
+2901031,Van Wyck Elementary School,school
+2901611,Discovery Charter Of Lancaster,school
+3055004,Laurens District 55 High School,school
+3055005,Laurens Middle School,school
+3055006,Ford Elementary School,school
+3055010,E. B. Morse Elementary School,school
+3055011,Laurens Elementary School,school
+3055013,Sanders Middle School,school
+3055014,Waterloo Elementary,school
+3055016,Gray Court-Owings Elementary/Middle School,school
+3055017,Hickory Tavern Elementary/Middle School,school
+3056016,Clinton High School,school
+3056017,Clinton Middle School,school
+3056019,Clinton Elementary School,school
+3056022,Joanna-Woodson Elementary,school
+3056023,Eastside Elementary,school
+3101007,Dennis Es,school
+3101011,Lower Lee Elementary,school
+3101012,West Lee Elementary School,school
+3101013,Lee Central High School,school
+3101015,Lee Central Middle School,school
+3201001,Gilbert High School,school
+3201003,Lexington High School,school
+3201004,Pelion High School,school
+3201005,Gilbert Elementary School,school
+3201007,Lexington Elementary School,school
+3201008,Pelion Elementary School,school
+3201009,Oak Grove Elementary School,school
+3201010,Lexington Middle School,school
+3201011,Red Bank Elementary School,school
+3201049,White Knoll Elementary,school
+3201052,Saxe Gotha Elementary School,school
+3201053,White Knoll Middle,school
+3201054,Gilbert Middle,school
+3201055,Midway Elementary School,school
+3201056,Lake Murray Elementary,school
+3201057,White Knoll High School,school
+3201058,Pelion Middle School,school
+3201060,Pleasant Hill Elementary School,school
+3201061,Pleasant Hill Middle School,school
+3201062,Carolina Springs Elementary School,school
+3201063,Carolina Springs Middle School,school
+3201064,Forts Pond Elementary,school
+3201065,New Providence Elementary School,school
+3201066,Rocky Creek Elementary School,school
+3201067,Meadow Glen Elementary School,school
+3201068,Meadow Glen Middle School,school
+3201069,River Bluff High School,school
+3201070,Deerfield Elementary School,school
+3201071,Beechwood Middle School,school
+3201072,Centerville Elementary School,school
+3202009,Airport High School,school
+3202011,Brookland-Cayce High School,school
+3202012,R.H. Fulmer Middle School,school
+3202017,Busbee Creative Arts Academy,school
+3202019,Congaree Elementary School,school
+3202020,Northside Middle School,school
+3202023,Saluda River Academy For The Arts,school
+3202024,Springdale Elementary,school
+3202026,Pine Ridge Middle School,school
+3202027,Herbert A. Wood Elementary School,school
+3202029,Cayce Elementary School,school
+3202030,Riverbank Elementary,school
+3203026,Batesburg-Leesville High School,school
+3203028,Batesburg-Leesville Elementary School,school
+3203029,Batesburg-Leesville Middle School,school
+3204034,Swansea High School,school
+3204035,Frances Mack Intermediate School,school
+3204036,Sandhills Middle School- Lexington School District Four,school
+3204039,Sandhills Elementary,school
+3205038,Chapin High School,school
+3205039,Irmo High School,school
+3205040,Irmo Middle School,school
+3205041,Chapin Elementary School,school
+3205042,Dutch Fork Elementary,school
+3205043,Irmo Elementary,school
+3205044,Leaphart Elementary School Steam Magnet,school
+3205045,Seven Oaks Elementary School Media Magnet,school
+3205046,Crossroads Intermediate School,school
+3205047,Nursery Road Elementary School-Arts Magnet,school
+3205048,Harbison West Elementary,school
+3205049,H. E. Corley Elementary School Leadership Magnet And Montessori M,school
+3205050,Chapin Intermediate School,school
+3205051,Dutch Fork High School,school
+3205052,Lake Murray Elementary School,school
+3205053,River Springs Elementary,school
+3205054,Dutch Fork Middle School,school
+3205055,Ballentine Elementary School,school
+3205056,Oak Pointe Elementary,school
+3205057,Spring Hill High School,school
+3205058,Chapin Middle School,school
+3301001,Mccormick High School,school
+3301002,Mccormick Middle School,school
+3301003,Mccormick Elementary School,school
+3410002,Marion High School,school
+3410004,Marion Intermediate School,school
+3410007,Johnakin Middle School,school
+3410008,Mullins High School,school
+3410009,Palmetto Middle School,school
+3410010,Mccormick Elementary School,school
+3410025,Creek Bridge Stem Academy,school
+3501020,Mccoll Elementary Middle School,school
+3501023,Clio Elementary School,school
+3501025,Wallace Elementary Middle School,school
+3501026,Marlboro County High School,school
+3501027,Bleheim Middle School Of Discovery,school
+3501029,Bennettsville Intermediate School,school
+3601001,Newberry High School,school
+3601002,Mid-Carolina High School,school
+3601004,Whitmire Community School,school
+3601005,Boundary Street Elementary,school
+3601008,Gallman Elementary School,school
+3601009,Pomaria-Garmany Elementary School,school
+3601010,Little Mountain Elementary School,school
+3601015,Reuben Elementary,school
+3601018,Newberry Elementary School,school
+3601019,Mid-Carolina Middle School,school
+3601020,Newberry Middle,school
+3601021,Whitmire Community School,school
+3601022,Prosperity-Rikard Elementary School,school
+3701005,Seneca Senior High School,school
+3701006,Walhalla Middle School,school
+3701007,Walhalla High School,school
+3701008,West-Oak High School,school
+3701012,Keowee Elementary School,school
+3701013,Northside Elementary School,school
+3701016,James M. Brown Elementary School,school
+3701017,Ravenel Elementary School,school
+3701020,Tamassee-Salem Elementary School,school
+3701022,Walhalla Elementary School,school
+3701023,Westminster Elementary,school
+3701026,Seneca Middle School,school
+3701027,Fair-Oak Elementary School,school
+3701028,Orchard Park Elementary School,school
+3701030,West-Oak Middle School,school
+3701031,Blue Ridge Elementary School,school
+3809010,Bethune-Bowman Middle/High,school
+3809012,Bethune-Bowman Elementary,school
+3809018,Holly Hill-Roberts Middle,school
+3809019,Holly Hill Elementary School,school
+3809021,St. James-Gaillard Elementary,school
+3809022,Vance-Providence Elementary,school
+3809024,Edisto High School,school
+3809025,Carver-Edisto Middle School,school
+3809027,Robert E. Howard Middle School,school
+3809028,Orangeburg-Wilkinson,school
+3809034,Marshall Elementary School,school
+3809036,Brookdale Elementary School,school
+3809037,William J. Clark Middle School,school
+3809039,Sheridan Elementary School,school
+3809040,Whittaker Elementary School,school
+3809042,North Middle High School,school
+3809044,Dover Elementary School,school
+3809047,Elloree Elementary/Middle School,school
+3809048,Lake Marion High School,school
+3809049,Branchville High School,school
+3809051,Lockett Elementary School,school
+3809053,Edisto Elementary,school
+3809054,Hunter- Kinard- Tyler High School,school
+3809055,Hunter Kinard Tyler Elementary School,school
+3809057,Mellichamp Elementary,school
+3809601,Orangeburg High School For Health Professions,school
+3901001,Dacusville Middle School,school
+3901002,Rc Edwards Middle School,school
+3901003,D.W. Daniel High,school
+3901004,Richard H. Gettys Middle School,school
+3901005,Easley High School,school
+3901006,Liberty High School,school
+3901007,Pickens Middle School,school
+3901008,Pickens High School,school
+3901014,Central Academy Of The Arts,school
+3901015,Crosswell Elementary School,school
+3901016,Dacusville Elementary,school
+3901017,East End Elementary School,school
+3901018,Forest Acres Elementary,school
+3901022,Liberty Elementary,school
+3901023,Clemson Elementary School,school
+3901025,Pickens Elementary,school
+3901027,Six Mile Elementary,school
+3901028,West End Elementary,school
+3901029,Mckissick Academy Of Science And Technology,school
+3901030,Liberty Middle School,school
+3901032,Hagood Elementary School,school
+3901033,Ambler Elementary,school
+4001002,Columbia High School,school
+4001004,Dreher High School,school
+4001005,Eau Claire High School,school
+4001007,A.C. Flora High School,school
+4001010,Hopkins Middle School,school
+4001011,C A Johnson High School,school
+4001012,W.J. Keenan High School,school
+4001013,Lower Richland High School,school
+4001016,St. Andrews Middle School,school
+4001019,Alcorn Middle School,school
+4001020,Arden Elementary School,school
+4001024,Bradley Elementary School,school
+4001025,Brennen Elementary School,school
+4001027,Annie Burnside Elementary,school
+4001031,Crayton Middle School,school
+4001032,Caughman Road Elementary,school
+4001034,W. G. Sanders Middle School,school
+4001036,Gadsden Elementary,school
+4001037,Heyward Gibbes Middle School,school
+4001038,A.J. Lewis Greenview Elementary,school
+4001039,Hand Middle School,school
+4001040,Hopkins Elementary School,school
+4001041,Horrell Hill Elementary School,school
+4001042,Hyatt Park Elementary,school
+4001045,Logan Elementary School,school
+4001046,Meadowfield Elementary,school
+4001047,Mill Creek Elementary School,school
+4001048,A.C. Moore Elementary,school
+4001053,Edward E. Taylor Elementary School,school
+4001054,Rosewood Elementary School,school
+4001055,South Kilbourne Elementary,school
+4001056,Satchel Ford Elementary School,school
+4001059,William S. Sandel Elementary School,school
+4001060,Hb Rhame Elementary,school
+4001062,John P Thomas Elementary,school
+4001064,Webber Elementary,school
+4001067,W.A. Perry Middle School,school
+4001088,Carver-Lyon Elementary School,school
+4001089,Burton-Pack Elementary School,school
+4001090,Pine Grove Elementary,school
+4001091,Southeast Middle,school
+4001092,Watkins-Nance Elementary School,school
+4001093,Forest Heights Elementary School,school
+4001094,Brockman Elementary,school
+4001601,Richland One Charter Middle College,school
+4001603,Carolina School For Inquiry,school
+4001905,Pendergrass-Fairwold School,school
+4002069,Spring Valley High School,school
+4002070,Bethel-Hanberry Elementary School,school
+4002072,Dent Middle School,school
+4002073,L.W. Conder Elementary Arts Integrated Magnet School,school
+4002074,Forest Lake Elementary,school
+4002075,Joseph Keels Elementary,school
+4002076,Lonnie B. Nelson Elementary School,school
+4002077,Windsor Elementary,school
+4002078,E. L. Wright Middle School,school
+4002079,Richland Northeast High School,school
+4002080,North Springs Elementary,school
+4002081,Pontiac Elementary School,school
+4002082,Summit Parkway Middle School,school
+4002083,Rice Creek Elementary,school
+4002084,Ridge View High School,school
+4002085,Blythewood Middle School,school
+4002086,Killian Elementary Steam Leaders Magnet,school
+4002087,Bookman Road Elementary,school
+4002090,Round Top Elementary,school
+4002091,Kelly Mill Med Pro Middle School,school
+4002092,Blythewood High School,school
+4002093,Sandlapper Elementary,school
+4002094,Polo Road Elementary School,school
+4002095,Longleaf Middle School,school
+4002096,Bridge Creek Elementary,school
+4002097,Langford Elementary,school
+4002098,Muller Road Middle School,school
+4002100,Westwood High School,school
+4002101,Catawba Trail Elementary,school
+4002102,Lake Carolina Elementary Upper Campus,school
+4002103,Jackson Creek Elementary,school
+4002600,Richland Two Charter High,school
+4101003,Saluda High School,school
+4101005,Saluda Middle School,school
+4101006,Saluda Elementary School,school
+4101010,Hollywood Elementary School,school
+4201002,Chapman High School,school
+4201003,Landrum High School,school
+4201004,T.E. Mabry Middle,school
+4201006,Campobello-Gramling School,school
+4201007,O.P. Earle Elementary,school
+4201009,Holly Springs-Motlow Elementary,school
+4201011,New Prospect Elementary,school
+4201087,Landrum Middle School,school
+4201088,Inman Intermediate School,school
+4202012,Boiling Springs High School,school
+4202013,Chesnee High School,school
+4202014,Boiling Springs Middle School,school
+4202015,Boiling Springs Elementary School,school
+4202018,Chesnee Elementary School,school
+4202019,Cooley Springs-Fingerville Elementary School,school
+4202020,James H Hendrix Elementary School,school
+4202023,Mayo Elementary School,school
+4202024,Boiling Springs Intermediate School,school
+4202086,Chesnee Middle School,school
+4202087,Carlisle-Foster's Grove Elementary,school
+4202088,Oakland Elementary,school
+4202089,Rainbow Lake Middle School,school
+4202090,Shoally Creek Elementary,school
+4203025,Cowpens Middle School,school
+4203026,Broome High School,school
+4203027,Middle School Of Pacolet,school
+4203028,Cannons Elementary School,school
+4203030,Cowpens Elementary School,school
+4203034,Pacolet Elementary School,school
+4204035,Woodruff Middle School,school
+4204036,Woodruff High School,school
+4204042,Woodruff Elementary School,school
+4205043,James F. Byrnes High School,school
+4205045,D. R. Hill Middle School,school
+4205046,Duncan Elementary School Of The Arts,school
+4205049,Reidville Elementary School,school
+4205052,Wellford Academy Of Science And Technology,school
+4205089,Beech Springs Intermediate School,school
+4205090,River Ridge Elementary School,school
+4205091,Berry Shoals Intermediate School,school
+4205092,Florence Chapel Middle,school
+4205094,Abner Creek Academy,school
+4205095,Lyman Elementary School,school
+4206053,Dorman High School,school
+4206054,Fairforest Middle School,school
+4206056,L. E. Gable Middle School,school
+4206057,Arcadia Elementary,school
+4206058,Fairforest Elementary School,school
+4206060,R.P. Dawkins Middle School,school
+4206061,Lone Oak Elementary School,school
+4206062,Pauline-Glenn Springs Elementary School,school
+4206065,Jesse S. Bobo Elementary School,school
+4206066,West View Elementary School,school
+4206067,Woodland Heights Elementary School,school
+4206086,Roebuck Elementary School,school
+4206088,Anderson Mill Elementary School,school
+4207068,Carver Middle School,school
+4207071,Jg Mccracken Middle School,school
+4207073,Spartanburg High School,school
+4207074,Jesse W. Boyd Elementary School,school
+4207075,Ep Todd School,school
+4207077,The Cleveland Academy Of Leadership,school
+4207082,Pine Street Elementary School,school
+4207085,Mary H. Wright Elementary School,school
+4207087,Drayton Mills Elementary School,school
+4207200,Meeting Street Academy,school
+4301002,Ebenezer Middle School,school
+4301003,Furman Middle,school
+4301004,Hillcrest Middle School,school
+4301008,Cherryvale Elementary School,school
+4301010,R.E. Davis College Preparatory Academy,school
+4301012,High Hills Elementary School,school
+4301014,Manchester Elementary School,school
+4301017,Rafting Creek Elementary School,school
+4301021,Alice Drive Middle School,school
+4301022,Bates Middle,school
+4301024,Sumter High School,school
+4301026,Alice Drive Elementary,school
+4301029,Crosswell Drive Elementary,school
+4301031,Lemira Elementary School,school
+4301033,Millwood Elementary School,school
+4301038,Wilder,school
+4301039,Willow Drive Elementary,school
+4301040,Pocalla Springs Elementary School,school
+4301041,Kingsbury Elementary School,school
+4301042,Crestwood High School,school
+4301043,Lakewood High,school
+4301044,Chestnut Oaks Middle,school
+4401004,Sims Middle School,school
+4401005,Union County High School,school
+4401007,Buffalo Elementary School,school
+4401012,Foster Park Elementary School,school
+4401014,Jonesville Elementary Middle School,school
+4401017,Monarch Elementary School,school
+4501006,Hemingway High School,school
+4501007,Kingstree Middle Magnet School Of The Arts,school
+4501008,Kingstree High School,school
+4501012,Ce Murray High School,school
+4501017,Greeleyville Elementary School,school
+4501021,Kenneth Gardner Elementary School,school
+4501024,Hemingway Elementary School,school
+4501025,Hemingway M.B. Lee Middle School,school
+4501027,Ce Murray Middle School,school
+4601003,York Comprehensive High School,school
+4601008,Jefferson Elementary,school
+4601044,York Middle School,school
+4601045,Hickory Grove Sharon Elementary,school
+4601046,Hunter Street Elementary,school
+4601047,Cotton Belt Elementary,school
+4601048,York Intermediate School,school
+4601049,Harold C. Johnson Elementary,school
+4602010,Clover High School,school
+4602011,Bethany Elementary,school
+4602012,Bethel Elementary School,school
+4602013,Clover Middle School,school
+4602014,Kinard Elementary School,school
+4602016,Oakridge Middle School,school
+4602018,Larne Elementary School,school
+4602047,Griggs Road Elementary,school
+4602051,Crowders Creek Elementary,school
+4602052,Oakridge Elementary School,school
+4603015,Castle Heights Middle School,school
+4603016,Northwestern High School,school
+4603017,Rock Hill High,school
+4603018,Sullivan Middle School,school
+4603019,Rawlinson Road Middle School,school
+4603020,Belleview Elementary School,school
+4603022,Ebenezer Avenue Elementary,school
+4603023,Ebinport Elementary,school
+4603026,Finley Road Elementary School,school
+4603027,Lesslie Elementary School,school
+4603029,Northside Elementary,school
+4603030,Oakdale Steam Elementary,school
+4603031,Richmond Drive Elementary,school
+4603032,Rosewood Elementary School,school
+4603033,Sunset Park,school
+4603035,York Road Elementary School,school
+4603036,Independence Elementary School,school
+4603037,Mt. Gallant Elementary,school
+4603038,Saluda Trail Middle School,school
+4603039,India Hook Elementary School,school
+4603040,Old Pointe Elementary School,school
+4603041,South Pointe High School,school
+4603042,Dutchman Creek Middle School,school
+4603043,Mount Holly Elementary School,school
+4603044,Cherry Park Elementary School Of Language Immersion,school
+4603602,The Palmetto School,school
+4604036,Fort Mill High School,school
+4604037,Fort Mill Middle School,school
+4604042,Riverview Elementary School,school
+4604043,Fort Mill Elementary School,school
+4604048,Gold Hill Elementary School,school
+4604049,Gold Hill Middle School,school
+4604051,Orchard Park Elementary,school
+4604052,Springfield Elementary School,school
+4604053,Springfield Middle School,school
+4604054,Nation Ford High School,school
+4604055,Pleasant Knoll Elementary School,school
+4604056,Sugar Creek Elementary,school
+4604057,Banks Trail Middle School,school
+4604058,Tega Cay Elementary,school
+4604059,Doby's Bridge Elementary School,school
+4604060,Pleasant Knoll Middle School,school
+4604061,Catawba Ridge High School,school
+4604062,River Trail Elementary School,school
+4604063,Kings Town Elementary School,school
+4701006,Spartanburg Preparatory School,school
+4701010,Palmetto Scholars Academy,school
+4701011,York Preparatory Academy,school
+4701013,East Point Academy,school
+4701014,SC Whitmore School,school
+4701017,Youth Leadership Academy,school
+4701019,Cape Romain Environmental Education Charter School,school
+4701020,Fox Creek High School,school
+4701021,Midlands Middle College,school
+4701026,Green Charter School,school
+4701027,Bridges Preparatory School,school
+4701029,"Pee Dee Math, Science, And Technology Academy",school
+4701033,Riverwalk Academy,school
+4701034,High Point Academy,school
+4701036,Lead Academy Public Charter School,school
+4701037,Lowcountry Montessori School,school
+4701039,The Next School,school
+4701040,Tall Pines Stem Academy,school
+4701042,Felton Laboratory Charter School,school
+4701043,Greenville Technical Charter High School,school
+4701044,Green Charter School Of The Midlands,school
+4701047,Greer Middle College Charter High School,school
+4701048,Legacy Early College,school
+4701050,East Link Academy Charter School,school
+4701051,Bettis Preparatory,school
+4701053,Polaris Tech Charter School,school
+4701054,Lakes And Bridges Charter School,school
+4701055,Charleston Advancement Academy,school
+4701056,Midlands Arts Conservatory,school
+4701057,Green Charter School Of Spartanburg,school
+4701060,Butler Academy,school
+4801001,Virtus Academy Of Sc,school
+4801002,Belton Preparatory Academy,school
+4801003,Montessori School Of Camden,school
+4801004,Royal Live Oaks Academy Of The Arts & Sciences Charter School,school
+4801005,Oceanside Collegiate Academy,school
+4801006,Mevers School Of Excellence,school
+4801007,Gray Collegiate Academy,school
+4801008,Coastal Leadership Academy,school
+4801009,Midlands Stem Institute,school
+4801010,Odyssey Online Learning,school
+4801011,South Carolina Virtual Charter School,school
+4801012,Cyber Academy Of South Carolina,school
+4801013,Calhoun Falls Charter School,school
+4801014,Clear Dot Charter School,school
+4801015,Thornwell Charter School,school
+4801016,Legion Collegiate Academy,school
+4801017,Summit Classical School,school
+4801018,South Carolina Connections Academy,school
+4801019,Lowcountry Leadership Charter School,school
+4801020,Cherokee Charter Academy,school
+4801021,Horse Creek Academy,school
+4801022,Brashier Middle College Charter High School,school
+5205003,Governor's School For Agriculture At John De La Howe,school
+5207005,SC School For The Blind High,school
+5207007,SC School For The Deaf High,school
+5207009,SC School For The Deaf Elementary/Middle,school
+5207010,SC School For The Blind Elementary/Middle,school
+5207011,Cedar Springs Academy,school
+5364001,SC Governor's School For The Arts And Humanities,school
+5395001,SC Governor's School for Science and Mathematics,school
