@@ -1,0 +1,1296 @@
+---
+title: "South Carolina Department of Education data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## Summary
+TK TK TK
+
+## Load libraries
+```{r}
+library(httr)
+library(tidyverse)
+library(jsonlite)
+library(janitor)
+library(parallel)
+library(readxl)
+library(rio)
+
+```
+
+## Define Functions
+```{r}
+## Function for standardizing column names
+# Load master key of variable names
+variable_names = read_excel("../data/handmade/variable_names.xlsx")
+
+# Define function that maps variable names that should be replaced to their replacements
+replace_names = function(df) {
+  column_names = colnames(df)
+  master_names_to_replace = c()
+  master_new_name = c()
+  for (i in column_names){
+    
+    names_to_replace = df[[i]]
+    
+    
+    names_to_replace = names_to_replace[!is.na(names_to_replace)]
+    new_names = rep(i, length(names_to_replace))
+    
+    master_names_to_replace = c(master_names_to_replace, names_to_replace)
+    master_new_name = c(master_new_name, new_names)
+    }
+  
+  master_key = setNames(nm = master_new_name, object = master_names_to_replace)
+  
+  return(master_key)
+  
+}
+
+# Run function and store as list of keys
+key = replace_names(variable_names)
+
+```
+
+
+## Load and clean data
+### Create canonical district list using 2021 districts
+```{r}
+
+# Make a list of unneeded districts - Department of Juvenile Justice and Department of Corrections
+drop_districts <- c("5208999", "5209999")
+
+# Isolate district names in 2021 report cards
+rc_district_list <- read_excel("../data/source/report-cards/rc_2021.xlsx", sheet = 3) %>% 
+  clean_names() %>% 
+  mutate(schoolid = as.character(schoolid)) %>% 
+  rename(any_of(key)) %>% 
+  # Filter only to districts
+  filter(type == "D") %>%
+  # Filter to exclude juvenile justice or correctional facilities
+  filter(!(school_id %in% drop_districts)) %>%
+  # Orangeburg County School District appears three times, all with the same info. Distinct df to remove two entries.
+  distinct(school_id, .keep_all = TRUE) %>% 
+  rename(district_id = school_id)
+
+# There are 80 county-based districts, and five others: Charter Institute At Erskine, Governor's School For Agriculture At John De La Howe, SC Governor's School For The Arts And Humanities, SC Governor's School for Science and Mathematics, SC Public Charter School District
+
+hc_district_list <- read_excel("../data/source/headcounts/2020_21_district_headcount_demographics.xlsx", col_names = c("district_id", "district", "total_actively_enrolled_students", "gender_female", "gender_male", "gender_missing", "black_or_african_american", "american_indian", "asian", "hispanic_or_latino", "hawaiian_or_other_pacific_islander", "two_or_more_races", "white", "race_missing", "pupils_in_poverty"), sheet = 1) %>%
+  slice(8:94) %>%
+  select(1:2) %>% 
+  # Add trailing "999" to match ids in other datasets
+  mutate(district_id = paste0(district_id, "999")) %>% 
+  rename(district_alt = district)
+  
+# Create list with both versions of district name. Use an inner join to drop juvenile justice and corrections departments that are still in hc_district_list
+district_list <- rc_district_list %>% 
+  inner_join(hc_district_list) %>% 
+  # Remove unneeded columns
+  select(-headname, -year, -type)
+  
+
+# Create list with only the district names and ids for use in creation of school list
+district_ids <- district_list %>% 
+  select(district, district_alt, district_id)
+  
+
+```
+
+
+
+
+
+### Create a canonical school list using 2021 schools
+```{r}
+# Make a list of unneeded entries - statewide and Department of Juvenile Justice
+drop_schools <- c("9999999", "5208001", "5209001")
+
+## How many schools are in each 2021 dataset?
+# Load report card academic data for elementary and middle schools
+rc_21_elem_mid <- read_excel("../data/source/report-cards/rc_2021.xlsx", sheet = 4) %>% 
+  clean_names()
+
+# Load report card data for high schools
+rc_21_high <- read_excel("../data/source/report-cards/rc_2021.xlsx", sheet = 5) %>% 
+  clean_names()
+
+# Bind rows for report card academic data
+rc_academic <- rc_21_elem_mid %>% 
+  bind_rows(rc_21_high) %>%
+  mutate(schoolid = as.character(schoolid)) %>% 
+  rename(any_of(key)) %>% 
+  filter(type != "D") %>% 
+  filter(!(school_id %in% drop_schools)) %>% 
+### This removes duplicate school ids, but we lose the distinction of some schools that have both elem and middle school data ("type" column)
+  distinct(school_id, .keep_all = TRUE) %>% 
+  mutate(len_str = nchar(school_id)) %>% 
+  mutate(school_id = if_else(len_str == 6, paste0("0", school_id), school_id))
+
+# Load report card main page
+rc_main <- read_excel("../data/source/report-cards/rc_2021.xlsx", sheet = 3) %>% 
+  clean_names() %>% 
+  mutate(schoolid = as.character(schoolid)) %>% 
+  rename(any_of(key)) %>% 
+  # Filter to exclude districts, primary schools, the statewide entry
+  filter(type != "D", type != "P") %>%
+  # Filter to exclude two schools that are juvenile justice or correctional facilities
+  filter(!(school_id %in% drop_schools)) %>% 
+### This removes duplicate school ids, but we lose the distinction of some schools that have both elem and middle school data ("type" column) -- need to resolve
+  distinct(school_id, .keep_all = TRUE)
+
+# Load school headcount
+school_hc_21 <- read_excel("../data/source/headcounts/2020_21_school_headcount_demographics.xlsx", col_names = c("school_id", "district", "school", "total_actively_enrolled_students", "gender_female", "gender_male", "gender_missing", "black_or_african_american", "american_indian", "asian", "hispanic_or_latino", "hawaiian_or_other_pacific_islander", "two_or_more_races", "white", "race_missing", "pupils_in_poverty"), sheet = 1) %>%
+  slice(8:1227) %>%
+  # Filter out schools that are part of the departments of juvenile justice or corrections
+  filter(!grepl('Department', district)) %>% 
+  mutate(year = "2021")
+
+# The school list for additional info main is the same as report cards. We do not need to include this dataset in the joins for the school key.
+
+  # Count number of rows in each dataset
+  # nrow(rc_academic)
+  # nrow(rc_main)
+  # nrow(school_hc_21)
+  
+  # Check which schools are in rc_academic and not rc_main - none
+  # anti <- rc_academic %>%
+  #   anti_join(rc_main, by = c("year", "school_id"))
+  
+  # Check which schools are in rc_main and not rc_academic - Hcs Scholars Academy High School, which needs to be included in main school list
+  # anti <- rc_main %>%
+  #   anti_join(rc_academic, by = c("year", "school_id"))
+
+## Join report card main list with report card academic list. Use left join to retain HCS Scholars Academy High School
+rc_list <- rc_main %>%
+  left_join(rc_academic, by = c("year", "school_id"))
+
+# Join report card list with headcount list
+school_list_rc_hc <- rc_list %>% 
+  left_join(school_hc_21, by = "school_id") %>% 
+  select(2:14,17) %>% 
+  rename(district = district.x, school = school.x, type = type.x)
+
+
+## Add charter schools
+# Load and clean 2022 charter schools list. Sara Gregory created this file by exporting SCDE school directory data (https://ed.sc.gov/districts-schools/schools/school-directory/) and removing all schools except those that appeared on SCDE's website as a charter school as of April 15, 2022.
+charter_schools_2022 <- read_csv("../data/handmade/charter_schools_04_15_2022.csv") %>% 
+  clean_names %>% 
+  # Create a column to identify these schools as charter schools
+  mutate(type_special = "charter") %>% 
+  # Change district and school code column types to characters
+  mutate(districtcode = as.character(districtcode), schoolcode = as.character(schoolcode)) %>% 
+  # Find length of district and school codes
+  mutate(len_districtcode = nchar(districtcode), len_schoolcode = nchar(schoolcode)) %>% 
+  # Add leading zeros to district and school ids
+  mutate(districtcode = if_else(len_districtcode == 3, paste0("0", districtcode), districtcode)) %>% 
+  # Add leading zeros to school ids
+  mutate(schoolcode = if_else(len_schoolcode == 2, paste0("0", schoolcode), schoolcode)) %>% 
+  mutate(schoolcode = if_else(len_schoolcode == 1, paste0("00", schoolcode), schoolcode)) %>% 
+  # Create unique id by combining district and school ids. This will match the main school list
+  mutate(school_id = paste0(districtcode, schoolcode))
+
+# Create df with only the charter ids and the designation as a charter school
+charter_ids <- charter_schools_2022 %>% 
+  select(school_id, type_special)
+
+# Join school list with charter school id list to add charter designation column.
+school_list_with_charters <- school_list_rc_hc %>%
+  left_join(charter_ids, by = "school_id")
+
+    # Charter school checks
+    # Check how many schools have been identified as charters in the school list
+    # charters_in_school_list <- school_list %>%
+    #   filter(type_special == "charter")
+    
+    # 16 schools for the 2022 charter list are not in the main school list. Identify those. 
+    # missing_charters <- charter_schools_2022 %>%
+    #   left_join(school_list, by = "school_id") %>%
+    #   filter(is.na(school))
+
+
+## Add district ids to school list
+school_list <- district_ids %>% 
+  left_join(school_list_with_charters, by = "district")
+
+## Export school list for geocoding (in export chunk below)
+
+```
+
+```{r}
+## Load geocoded school list
+school_list_geocoded = read_csv("../data/processed/school_list_geocoded.csv")
+
+```
+
+
+
+
+### Load and clean school performance data
+#### Academic data for elementary and middle schools
+```{r}
+#2017
+## Load sheet with academic variables for elementary schools. Note: elem science scores for 2017 were not available at a school level.
+acad_elem_17 <- read_excel("../data/source/report-cards/rc_2017_elem.xlsx", sheet = 2) %>% 
+  clean_names() %>%
+  mutate(e_pct_me = sc17_eng4e_xp + sc17_eng3r_ep, m_pct_me = sc17_mat4e_xp + sc17_mat3r_ep,
+         year = "2017", id = as.character(id)) %>% 
+  select("year", 2:5, "e_pct_me", "sc17_eng1n_sp", "m_pct_me", "sc17_mat1n_sp") %>% 
+  rename(any_of(key)) 
+
+########################## !!!!! Resolve "p17_sci1nm" issues
+## Load sheet with academic variables for middle schools
+acad_mid_17 <- read_excel("../data/source/report-cards/rc_2017_middle.xlsx", sheet = 2) %>% 
+  clean_names() %>%
+  mutate(e_pct_me = sc17_eng4e_xp + sc17_eng3r_ep, m_pct_me = sc17_mat4e_xp + sc17_mat3r_ep, sc_pct_me = p17_sci5exe + p17_sci7exc, year = "2017", id = as.character(id)) %>%
+  select("year", 2:5, "e_pct_me", "sc17_eng1n_sp", "m_pct_me", "sc17_mat1n_sp", "sc_pct_me", "p17_sci1nm") %>% 
+  rename(any_of(key))
+
+# 2018
+## Load sheet with academic variables for elementary and middle schools
+acad_elemmid_18 <- read_excel("../data/source/report-cards/rc_2018.xlsx", sheet = 4) %>% 
+  clean_names() %>% 
+  select(1:5,"e_pct_me", "e_pct_in_need_of_support","m_pct_me", "m_pct_in_need_of_support", "sc_pct_me", "sc_pct_in_need_of_support") %>% 
+  rename(any_of(key))
+
+
+#2019
+## Load sheet with academic variables for elementary and middle schools
+acad_elemmid_19 <- read_excel("../data/source/report-cards/rc_2019.xlsx", sheet = 4) %>% 
+  clean_names() %>% 
+  select(1:5,"e_pct_me", "e_pct_in_need_of_support","m_pct_me", "m_pct_in_need_of_support", "sc_pct_me", "sc_pct_in_need_of_support") %>% 
+   rename(any_of(key))
+
+#2020
+## No state assessments were given in spring 2020, so no metrics for English, math or science performance at elementary or middle schools
+
+#2021
+acad_elemmid_21 <- read_excel("../data/source/report-cards/rc_2021.xlsx", sheet = 4) %>% 
+  clean_names() %>% 
+  select(1:5,"e_pct_me", "e_pct_in_need_of_support","m_pct_me", "m_pct_in_need_of_support", "sc_pct_me", "sc_pct_in_need_of_support") %>% 
+  rename(any_of(key)) %>% 
+  # Convert school id and year to character. Convert performance metrics to numeric. In the latter change, schools with suppressed data are coerced from "*" to "NA".
+  mutate(school_id = as.character(school_id), year = as.character(year), e_pct_me = as.numeric(e_pct_me), e_pct_in_need_of_support = as.numeric(e_pct_in_need_of_support), m_pct_me = as.numeric(m_pct_me), m_pct_in_need_of_support = as.numeric(m_pct_in_need_of_support), sc_pct_me = as.numeric(sc_pct_me), sc_pct_in_need_of_support = as.numeric(sc_pct_in_need_of_support))
+
+
+# Bind elementary and middle schools across years
+acad_em_bind = acad_elem_17 %>% 
+  bind_rows(acad_mid_17) %>% 
+  bind_rows(acad_elemmid_18) %>% 
+  bind_rows(acad_elemmid_19) %>% 
+  bind_rows(acad_elemmid_21) %>%
+  mutate(len_str = nchar(school_id)) %>% 
+  mutate(school_id = if_else(len_str == 6, paste0("0", school_id), school_id)) %>% 
+  select(-len_str)
+
+```
+
+
+### Academic data for high schools
+```{r}
+# Define list of academic variables
+acad_high_vars <- c("report_card_year", "district_nm", "school_nm", "schoolid", "schooltypecd", "e_pct_abc", "e_pct_ab", "e_pct_cd", "e_pct_f", "m_pct_abc", "m_pct_ab", "m_pct_cd", "m_pct_f", "sc_pct_abc", "sc_pct_ab", "sc_pct_cd", "sc_pct_f")
+
+
+# 2017 - No academic grades for 2017. Metric changed between 2017 and 2018, so we cannot use comparable data from 2017.
+
+acad_high_18 <- read_excel("../data/source/report-cards/rc_2018.xlsx", sheet = 5) %>% 
+  clean_names() %>% 
+  # English grades
+  mutate(e_pct_ab = e_pct_a + e_pct_b, e_pct_cd = e_pct_c + e_pct_d) %>% 
+  # Algebra grades
+  mutate(sc_pct_ab= sc_pct_a + sc_pct_b, sc_pct_cd= sc_pct_c + m_pct_d) %>%
+  # Biology grades
+  mutate(m_pct_ab = m_pct_a + m_pct_b, m_pct_cd = m_pct_c + m_pct_d) %>%
+  select(any_of(acad_high_vars))
+
+  # Note: There are about 17 high schools or districts with 0 students scoring A or B in English ... is that accurate?
+
+acad_high_19 <- read_excel("../data/source/report-cards/rc_2019.xlsx", sheet = 5) %>% 
+  clean_names() %>% 
+  # English grades
+  mutate(e_pct_ab = e_pct_a + e_pct_b, e_pct_cd = e_pct_c + e_pct_d) %>% 
+  # Algebra grades
+  mutate(sc_pct_ab= sc_pct_a + sc_pct_b, sc_pct_cd= sc_pct_c + m_pct_d) %>%
+  # Biology grades
+  mutate(m_pct_ab = m_pct_a + m_pct_b, m_pct_cd = m_pct_c + m_pct_d) %>%
+  select(any_of(acad_high_vars))
+
+# No academic grades for 2020.
+
+acad_high_21 <- read_excel("../data/source/report-cards/rc_2019.xlsx", sheet = 5) %>% 
+  clean_names() %>% 
+  # English grades
+  mutate(e_pct_ab = e_pct_a + e_pct_b, e_pct_cd = e_pct_c + e_pct_d) %>% 
+  # Algebra grades
+  mutate(sc_pct_ab= sc_pct_a + sc_pct_b, sc_pct_cd= sc_pct_c + m_pct_d) %>%
+  # Biology grades
+  mutate(m_pct_ab = m_pct_a + m_pct_b, m_pct_cd = m_pct_c + m_pct_d) %>%
+  select(any_of(acad_high_vars))
+
+
+# Bind academic variables across years
+acad_high_bind =  bind_rows(acad_high_18) %>% 
+  bind_rows(acad_high_19) %>% 
+  bind_rows(acad_high_21) %>%
+  rename(any_of(key))
+  # School ids are all 7 digits
+
+```
+
+
+### ACT scores
+```{r}
+# Define list of ACT variables
+act_vars <- c("report_card_year", "district_nm", "school_nm", "schoolid", "schooltypecd", "act_avg_english_score", "act_avg_reading_score", "act_avg_math_score", "act_avg_science_score", "act_avg_writing_score", "act_avg_composite_score")
+
+
+# 2017
+# Create district df for 2017 that multiple climate variables will pull from
+rc_dist_17 <- read_excel("../data/source/report-cards/rc_2017_district.xlsx", sheet = 2) %>% 
+  clean_names() %>% 
+  mutate(report_card_year = "2017", id = as.character(id)) %>% 
+  rename(dropout_rate_curr_yr = "c16", act_avg_english_score = "a17_d_eng_avg", act_avg_reading_score = "a17_d_rea_avg", act_avg_math_score = "a17_d_mat_avg", act_avg_science_score = "a17_d_sci_avg", act_avg_writing_score = "a17_d_wrt_avg", act_avg_composite_score = "a17_d_com_avg", pct_act = "a17_d_comp20", district_nm = "distname", school_nm = "locname", schoolid = "id", schooltypecd = "type")
+
+# Create high school df for 2017 that multiple climate variables will pull from
+rc_high_17 <- read_excel("../data/source/report-cards/rc_2017_high.xlsx", sheet = 2) %>% 
+  clean_names() %>% 
+  mutate(report_card_year = "2017", id = as.character(id)) %>% 
+  rename(dropout_rate_curr_yr = "c16", act_avg_english_score = "a17_eng_avg", act_avg_reading_score = "a17_rea_avg", act_avg_math_score = "a17_mat_avg", act_avg_science_score = "a17_sci_avg", act_avg_writing_score = "a17_wrt_avg", act_avg_composite_score = "a17_com_avg", pct_act = "a17_comp20", district_nm = "distname", school_nm = "locname", schoolid = "id", schooltypecd = "type")
+
+
+act_dist_17 <- rc_dist_17 %>% 
+  select(any_of(act_vars))
+
+act_high_17 <- rc_high_17 %>% 
+  select(any_of(act_vars))
+
+
+# 2018
+act_18 <- read_excel("../data/source/additional-info/ai-2018.xlsx", sheet = 5) %>% 
+  clean_names() %>% 
+  select(any_of(act_vars))
+
+# 2019
+act_19 <- read_excel("../data/source/additional-info/ai-2019.xlsx", sheet = 5) %>% 
+  clean_names() %>% 
+  select(any_of(act_vars))
+
+# 2020
+act_20 <- read_excel("../data/source/additional-info/ai-2020.xlsx", sheet = 6) %>% 
+  clean_names() %>%
+  mutate(report_card_year = as.character(report_card_year), schoolid = as.character(schoolid), act_avg_english_score = as.numeric(act_avg_english_score), act_avg_reading_score = as.numeric(act_avg_reading_score), act_avg_math_score = as.numeric(act_avg_math_score), act_avg_science_score = as.numeric(act_avg_science_score), act_avg_writing_score = as.numeric(act_avg_writing_score), act_avg_composite_score = as.numeric(act_avg_composite_score)) %>% 
+  select(any_of(act_vars))
+
+# 2021
+act_21 <- read_excel("../data/source/additional-info/ai-2021.xlsx", sheet = 6) %>% 
+  clean_names() %>% 
+  mutate(report_card_year = as.character(report_card_year), schoolid = as.character(schoolid), act_avg_english_score = as.numeric(act_avg_english_score), act_avg_reading_score = as.numeric(act_avg_reading_score), act_avg_math_score = as.numeric(act_avg_math_score), act_avg_science_score = as.numeric(act_avg_science_score), act_avg_writing_score = as.numeric(act_avg_writing_score), act_avg_composite_score = as.numeric(act_avg_composite_score)) %>% 
+  select(any_of(act_vars))
+
+
+# Bind years
+act_bind =  bind_rows(act_dist_17) %>% 
+  bind_rows(act_high_17) %>% 
+  bind_rows(act_18) %>% 
+  bind_rows(act_19) %>%
+  bind_rows(act_20) %>% 
+  bind_rows(act_21) %>%
+  rename(any_of(key))
+
+```
+
+
+### College and career readiness
+```{r}
+# Define list of college and career readiness variables
+career_vars <- c("report_card_year", "district_nm", "school_nm", "schoolid", "schooltypecd", "pct_college", "pct_career", "pct_act", "pct_cte", "pct_wbl", "pct_car_rdy")
+
+# 2017
+career_dist_17 <- rc_dist_17 %>% 
+  select(any_of(career_vars))
+  # Only one variable available
+
+career_high_17 <- rc_high_17 %>% 
+  select(any_of(career_vars))
+  # Only one variable available
+
+
+# 2018
+career_18 <- read_excel("../data/source/report-cards/rc_2018.xlsx", sheet = 6) %>% 
+  clean_names() %>% 
+  select(1:5, "pct_college", "pct_career", "pct_act", "pct_cte", "pct_wbl", "pct_car_rdy")
+
+# 2019
+career_19 <- read_excel("../data/source/report-cards/rc_2019.xlsx", sheet = 7) %>% 
+  clean_names() %>% 
+  select(1:5, "pct_college", "pct_career", "pct_act", "pct_cte", "pct_wbl", "pct_car_rdy")
+
+# 2020
+career_20 <- read_excel("../data/source/report-cards/rc_2020.xlsx", sheet = 5) %>% 
+  clean_names() %>% 
+  select(1:5, "pct_career", "pct_cte", "pct_wbl", "pct_car_rdy")
+  # "% diploma earners that were college ready" and "% diploma earners who met the college ready threshold for ACT" are not included in 2020 report card
+
+# 2021
+career_21 <- read_excel("../data/source/report-cards/rc_2021.xlsx", sheet = 8) %>% 
+  clean_names() %>%
+  mutate(report_card_year = as.character(report_card_year), schoolid = as.character(schoolid), pct_college = as.numeric(pct_college), pct_career = as.numeric(pct_career), pct_act = as.numeric(pct_act), pct_cte = as.numeric(pct_cte), pct_wbl = as.numeric(pct_wbl), pct_car_rdy = as.numeric(pct_car_rdy)) %>%
+  select(1:5, "pct_college", "pct_career", "pct_act", "pct_cte", "pct_wbl", "pct_car_rdy")
+
+
+# Bind college and career readiness variables across years
+career_bind =  bind_rows(career_dist_17) %>% 
+  bind_rows(career_high_17) %>% 
+  bind_rows(career_18) %>%
+  bind_rows(career_19) %>% 
+  bind_rows(career_21) %>%
+  rename(any_of(key)) %>% 
+  # Add leading zero to school ids with only 6 digits
+  mutate(len_str = nchar(school_id)) %>% 
+  mutate(school_id = if_else(len_str == 6, paste0("0", school_id), school_id)) %>% 
+  select(-len_str)
+
+```
+
+
+#### English learners progress
+```{r}
+# No English learner variables for 2017.
+
+# 2018
+ELprog_18 <- read_excel("../data/source/report-cards/rc_2018.xlsx", sheet = 7) %>% 
+  clean_names() %>% 
+  select(1:5, "pct_met_prog")
+
+# 2019
+ELprog_19 <- read_excel("../data/source/report-cards/rc_2019.xlsx", sheet = 8) %>% 
+  clean_names() %>% 
+  select(1:5, "pct_met_prog")
+
+# 2020
+ELprog_20 <- read_excel("../data/source/report-cards/rc_2020.xlsx", sheet = 6) %>% 
+  clean_names() %>%
+  mutate(report_card_year = as.character(report_card_year), schoolid = as.character(schoolid), pct_met_prog = as.numeric(pct_met_prog)) %>% 
+  select(1:5, "pct_met_prog") %>% 
+  rename(schooltypecd = school_type_cd)
+
+# 2021
+ELprog_21 <- read_excel("../data/source/report-cards/rc_2021.xlsx", sheet = 9) %>% 
+  clean_names() %>%
+  mutate(report_card_year = as.character(report_card_year), schoolid = as.character(schoolid), pct_met_prog = as.numeric(pct_met_prog)) %>% 
+  select(1:5, "pct_met_prog") %>% 
+  rename(schooltypecd = school_type_cd)
+
+
+# Bind English learners variables across years
+ELprog_bind =  bind_rows(ELprog_18) %>% 
+  bind_rows(ELprog_19) %>%
+  bind_rows(ELprog_20) %>% 
+  bind_rows(ELprog_21) %>%
+  rename(any_of(key)) %>% 
+  # Add leading zero to school ids with only 6 digits
+  mutate(len_str = nchar(school_id)) %>%
+  mutate(school_id = if_else(len_str == 6, paste0("0", school_id), school_id)) %>% 
+  select(-len_str)
+```
+
+### Graduation rates
+```{r}
+grad_variables <- c("year", "district", "school", "bedscode", "gpercent_overall", "gpercent_race_w", "gpercent_race_b", "gpercent_race_h", "gpercent_race_i", "gpercent_race_a")
+
+
+# 2017
+grad_17 <- read_excel("../data/source/additional-info/grad-2017.xls") %>%
+  clean_names() %>%
+  mutate(year = "2017") %>% 
+  select(any_of(grad_variables))
+
+# 2018
+grad_18 <- read_excel("../data/source/additional-info/grad-2018.xlsx") %>%
+  clean_names() %>% 
+  mutate(year = "2018") %>% 
+  select(any_of(grad_variables))
+
+# 2019
+grad_19 <- read_excel("../data/source/additional-info/grad-2019.xlsx") %>%
+  clean_names() %>%
+  mutate(year = "2019") %>% 
+  select(any_of(grad_variables))
+
+# 2020
+grad_20 <- read_excel("../data/source/additional-info/grad-2020.xlsx") %>%
+  clean_names() %>% 
+  mutate(year = "2020") %>% 
+  select(any_of(grad_variables))
+
+# 2021
+grad_21 <- read_excel("../data/source/additional-info/grad-2021.xlsx") %>%
+  clean_names() %>%
+  mutate(year = "2021") %>% 
+  select(any_of(grad_variables))
+
+
+# Bind years
+grad_bind = bind_rows(grad_17) %>% 
+  bind_rows(grad_18) %>% 
+  bind_rows(grad_19) %>% 
+  bind_rows(grad_20) %>% 
+  bind_rows(grad_21) %>%
+  rename(any_of(key)) %>% 
+  mutate(school_id = as.character(school_id), len_str = nchar(school_id)) %>% 
+  mutate(school_id = if_else(len_str == 6, paste0("0", school_id), school_id)) %>% 
+  select(-len_str) %>% 
+  # Instead of a column identifying the institution type, these files have districts identified in the school name column as "DISTRICT WITH CHARTER" or "DISTRICT NO CHARTER." The first option matches the unique district ids in other files. Remove the second option.
+  filter(school != "DISTRICT NO CHARTER")
+
+```
+
+#### Dropout rates
+```{r}
+# Define list of variables needed
+dropout_vars <- c("report_card_year", "district_nm", "school_nm", "schoolid", "schooltypecd", "dropout_rate_curr_yr")
+
+# 2017
+dropout_dist_17 <- rc_dist_17 %>% 
+  select(any_of(dropout_vars))
+
+dropout_high_17 <- rc_high_17 %>% 
+  select(any_of(dropout_vars))
+
+# 2018
+dropout_18 <- read_excel("../data/source/additional-info/ai-2018.xlsx", sheet = 4) %>%
+  clean_names() %>% 
+  select(any_of(dropout_vars))
+
+# 2019 
+dropout_19 <- read_excel("../data/source/additional-info/ai-2019.xlsx", sheet = 4) %>%
+  clean_names() %>% 
+  select(any_of(dropout_vars)) %>% 
+  mutate(dropout_rate_curr_yr = as.numeric(dropout_rate_curr_yr))
+
+# 2020 
+dropout_20 <- read_excel("../data/source/additional-info/ai-2020.xlsx", sheet = 5) %>%
+  clean_names() %>% 
+  select(any_of(dropout_vars)) %>% 
+  mutate(report_card_year = as.character(report_card_year), schoolid = as.character(schoolid))
+
+# 2021 
+dropout_21 <- read_excel("../data/source/additional-info/ai-2021.xlsx", sheet = 5) %>%
+  clean_names() %>% 
+  select(any_of(dropout_vars)) %>% 
+  mutate(report_card_year = as.character(report_card_year), schoolid = as.character(schoolid))
+
+
+# Bind years
+dropout_bind = bind_rows(dropout_dist_17) %>% 
+  bind_rows(dropout_high_17) %>% 
+  bind_rows(dropout_18) %>% 
+  bind_rows(dropout_19) %>% 
+  bind_rows(dropout_20) %>% 
+  bind_rows(dropout_21) %>% 
+  rename(any_of(key)) %>% 
+  mutate(len_str = nchar(school_id)) %>% 
+  mutate(school_id = if_else(len_str == 6, paste0("0", school_id), school_id)) %>% 
+  select(-len_str) %>% 
+  distinct(.keep_all = TRUE)
+```
+
+
+### Load and clean climate data
+#### Teachers
+```{r}
+# Define list of variables needed
+teacher_variables <- c("report_card_year", "district_nm", "school_nm", "schoolid", "schooltypecd", "tchreturn3yr_avg_pct_curr_yr", "tchadvdegree_pct_curr_yr", "tchinexperienced_pct_curr_yr", "c23", "tchsalary_avg_curr_yr", "prime_instruct_time_curr_yr")
+
+# 2017 - does not have comparable variables in teacher retention, advanced degrees or inexperienced teachers at the school level. It does have the percent of teachers with advanced degrees for districts and average teacher salary for schools and districts.
+
+tch_dist_17 <- read_excel("../data/source/report-cards/rc_2017_district.xlsx", sheet = 2) %>%
+  clean_names() %>% 
+  mutate(report_card_year = "2017", schoolid = as.character(id), schooltypecd = type, tchreturn3yr_avg_pct_curr_yr = as.numeric(NA), tchinexperienced_pct_curr_yr = as.numeric(NA)) %>% 
+  rename(district_nm = "distname", school_nm = "locname", tchadvdegree_pct_curr_yr = "c23", tchsalary_avg_curr_yr = "c29") %>% 
+  select(any_of(teacher_variables))
+
+tch_elem_17 <- read_excel("../data/source/report-cards/rc_2017_elem.xlsx", sheet = 2) %>%
+  clean_names() %>% 
+  mutate(report_card_year = "2017", schoolid = as.character(id), schooltypecd = type, tchreturn3yr_avg_pct_curr_yr = as.numeric(NA), tchinexperienced_pct_curr_yr = as.numeric(NA), tchadvdegree_pct_curr_yr = as.numeric(NA)) %>% 
+  rename(district_nm = "distname", school_nm = "locname", tchsalary_avg_curr_yr = "c29") %>% 
+  select(any_of(teacher_variables), -c23)
+
+tch_middle_17 <- read_excel("../data/source/report-cards/rc_2017_middle.xlsx", sheet = 2) %>%
+  clean_names() %>% 
+  mutate(report_card_year = "2017", schoolid = as.character(id), schooltypecd = type, tchreturn3yr_avg_pct_curr_yr = as.numeric(NA), tchinexperienced_pct_curr_yr = as.numeric(NA), tchadvdegree_pct_curr_yr = as.numeric(NA)) %>% 
+  rename(district_nm = "distname", school_nm = "locname", tchsalary_avg_curr_yr = "c29") %>% 
+  select(any_of(teacher_variables), -c23)
+
+tch_high_17 <- read_excel("../data/source/report-cards/rc_2017_high.xlsx", sheet = 2) %>%
+  clean_names() %>% 
+  mutate(report_card_year = "2017", schoolid = as.character(id), schooltypecd = type, tchreturn3yr_avg_pct_curr_yr = as.numeric(NA), tchinexperienced_pct_curr_yr = as.numeric(NA), tchadvdegree_pct_curr_yr = as.numeric(NA)) %>% 
+  rename(district_nm = "distname", school_nm = "locname", tchsalary_avg_curr_yr = "c29") %>% 
+  select(any_of(teacher_variables), -c23)
+
+# 2018
+tch_18 <- read_excel("../data/source/additional-info/ai-2018.xlsx", sheet = 9) %>%
+  clean_names() %>% 
+  select(any_of(teacher_variables))
+
+# 2019
+tch_19 <- read_excel("../data/source/additional-info/ai-2019.xlsx", sheet = 9) %>%
+  clean_names() %>% 
+  select(any_of(teacher_variables))
+
+# 2020
+tch_20 <- read_excel("../data/source/additional-info/ai-2020.xlsx", sheet = 10) %>%
+  clean_names() %>% 
+  select(any_of(teacher_variables)) %>% 
+  mutate(report_card_year = as.character(report_card_year), tchreturn3yr_avg_pct_curr_yr = as.numeric(tchreturn3yr_avg_pct_curr_yr), tchinexperienced_pct_curr_yr = as.numeric(tchinexperienced_pct_curr_yr), tchsalary_avg_curr_yr = as.numeric(tchsalary_avg_curr_yr))
+
+# 2021 
+tch_21 <- read_excel("../data/source/additional-info/ai-2021.xlsx", sheet = 11) %>%
+  clean_names() %>% 
+  select(any_of(teacher_variables)) %>% 
+  mutate(report_card_year = as.character(report_card_year), tchreturn3yr_avg_pct_curr_yr = as.numeric(tchreturn3yr_avg_pct_curr_yr), tchinexperienced_pct_curr_yr = as.numeric(tchinexperienced_pct_curr_yr), tchsalary_avg_curr_yr = as.numeric(tchsalary_avg_curr_yr))
+
+
+# Bind years
+teachers_bind = bind_rows(tch_dist_17) %>% 
+  bind_rows(tch_elem_17) %>% 
+  bind_rows(tch_middle_17) %>% 
+  bind_rows(tch_high_17) %>% 
+  bind_rows(tch_18) %>% 
+  bind_rows(tch_19) %>% 
+  bind_rows(tch_20) %>% 
+  bind_rows(tch_21) %>% 
+  rename(any_of(key)) %>% 
+  mutate(len_str = nchar(school_id)) %>% 
+  mutate(school_id = if_else(len_str == 6, paste0("0", school_id), school_id)) %>% 
+  select(-len_str) %>% 
+  distinct(.keep_all = TRUE)
+
+```
+
+#### Finances
+```{r}
+fin_variables <- c("report_card_year", "district_nm", "school_nm", "schoolid", "schooltypecd", "studentsin_poverty_pct_curr_yr", "expendfor_instruct_pct_curr_yr", "admin_salary_curr_yr", "total_ppe_curr_yr")
+
+# 2017 - no admin salaries, per-pupil expenditures
+fin_dist_17 <- read_excel("../data/source/report-cards/rc_2017_district.xlsx", sheet = 2) %>%
+  clean_names() %>% 
+  mutate(report_card_year = "2017", schoolid = as.character(id), schooltypecd = type) %>% 
+  rename(district_nm = "distname", school_nm = "locname", studentsin_poverty_pct_curr_yr = "poverty", expendfor_instruct_pct_curr_yr = "c35") %>% 
+  select(any_of(fin_variables))
+
+fin_elem_17 <- read_excel("../data/source/report-cards/rc_2017_elem.xlsx", sheet = 2) %>%
+  clean_names() %>% 
+  mutate(report_card_year = "2017", schoolid = as.character(id), schooltypecd = type) %>% 
+  rename(district_nm = "distname", school_nm = "locname", studentsin_poverty_pct_curr_yr = "poverty", expendfor_instruct_pct_curr_yr = "c35") %>% 
+  select(any_of(fin_variables))
+
+fin_middle_17 <- read_excel("../data/source/report-cards/rc_2017_middle.xlsx", sheet = 2) %>%
+  clean_names() %>% 
+  mutate(report_card_year = "2017", schoolid = as.character(id), schooltypecd = type) %>% 
+  rename(district_nm = "distname", school_nm = "locname", studentsin_poverty_pct_curr_yr = "poverty", expendfor_instruct_pct_curr_yr = "c35") %>% 
+  select(any_of(fin_variables))
+
+fin_high_17 <- read_excel("../data/source/report-cards/rc_2017_high.xlsx", sheet = 2) %>%
+  clean_names() %>% 
+  mutate(report_card_year = "2017", schoolid = as.character(id), schooltypecd = type) %>% 
+  rename(district_nm = "distname", school_nm = "locname", studentsin_poverty_pct_curr_yr = "poverty", expendfor_instruct_pct_curr_yr = "c35") %>% 
+  select(any_of(fin_variables))
+
+
+# 2018 - no per-pupil expenditures
+fin_18 <- read_excel("../data/source/additional-info/ai-2018.xlsx", sheet = 11) %>%
+  clean_names() %>% 
+  select(any_of(fin_variables))
+
+# 2019
+fin_19 <- read_excel("../data/source/additional-info/ai-2019.xlsx", sheet = 11) %>%
+  clean_names() %>% 
+  select(any_of(fin_variables))
+
+# 2020
+fin_20 <- read_excel("../data/source/additional-info/ai-2020.xlsx", sheet = 12) %>%
+  clean_names() %>% 
+  select(any_of(fin_variables)) %>% 
+  mutate(report_card_year = as.character(report_card_year), schoolid = as.character(schoolid), expendfor_instruct_pct_curr_yr = as.numeric(expendfor_instruct_pct_curr_yr), admin_salary_curr_yr = as.numeric(admin_salary_curr_yr), total_ppe_curr_yr = as.numeric(total_ppe_curr_yr))
+         
+# 2021 
+fin_21 <- read_excel("../data/source/additional-info/ai-2021.xlsx", sheet = 13) %>%
+  clean_names() %>% 
+  select(any_of(fin_variables)) %>% 
+  mutate(report_card_year = as.character(report_card_year), schoolid = as.character(schoolid), studentsin_poverty_pct_curr_yr = as.numeric(studentsin_poverty_pct_curr_yr), expendfor_instruct_pct_curr_yr = as.numeric(expendfor_instruct_pct_curr_yr), admin_salary_curr_yr = as.numeric(admin_salary_curr_yr), total_ppe_curr_yr = as.numeric(total_ppe_curr_yr))
+
+# Bind years
+finance_bind = bind_rows(fin_dist_17) %>% 
+  bind_rows(fin_elem_17) %>% 
+  bind_rows(fin_middle_17) %>% 
+  bind_rows(fin_high_17) %>% 
+  bind_rows(fin_18) %>% 
+  bind_rows(fin_19) %>% 
+  bind_rows(fin_20) %>% 
+  bind_rows(fin_21) %>% 
+  rename(any_of(key)) %>% 
+  mutate(len_str = nchar(school_id)) %>% 
+  mutate(school_id = if_else(len_str == 6, paste0("0", school_id), school_id)) %>% 
+  select(-len_str) %>% 
+  distinct(.keep_all = TRUE)
+
+```
+
+#### Technology
+```{r}
+tech_variables <- c("report_card_year", "district_nm", "school_nm", "schoolid", "schooltypecd", "gifted_pct_curr_yr", "pct78hs_credit_curr_yr", "princ_super_yrs_curr_yr", "tech_pct_class_wireless_curr_yr", "tech_oneto_one_curr_yr", "chronic_absenteeism_rate", "retained_pct_curr_yr")
+
+# 2017
+tech_dist_17 <- read_excel("../data/source/report-cards/rc_2017_district.xlsx", sheet = 2) %>%
+  clean_names() %>% 
+  mutate(report_card_year = "2017", schoolid = as.character(id), schooltypecd = type, cts_class = as.numeric(cts_class), cts_pctdev = as.numeric(cts_pctdev)) %>% 
+  rename(district_nm = "distname", school_nm = "locname", tech_pct_class_wireless_curr_yr = "cts_class", tech_oneto_one_curr_yr = "cts_pctdev", retained_pct_curr_yr = "c3", gifted_pct_curr_yr = "c6", pct78hs_credit_curr_yr = "c1", princ_super_yrs_curr_yr = "c31") %>% 
+  select(any_of(tech_variables))
+
+tech_elem_17 <- read_excel("../data/source/report-cards/rc_2017_elem.xlsx", sheet = 2) %>%
+  clean_names() %>% 
+  mutate(report_card_year = "2017", schoolid = as.character(id), schooltypecd = type, cts_class = as.numeric(cts_class), cts_pctdev = as.numeric(cts_pctdev)) %>% 
+  rename(district_nm = "distname", school_nm = "locname", tech_pct_class_wireless_curr_yr = "cts_class", tech_oneto_one_curr_yr = "cts_pctdev", retained_pct_curr_yr = "c3", gifted_pct_curr_yr = "c6", princ_super_yrs_curr_yr = "c31") %>% 
+  select(any_of(tech_variables))
+
+tech_middle_17 <- read_excel("../data/source/report-cards/rc_2017_middle.xlsx", sheet = 2) %>%
+  clean_names() %>% 
+  mutate(report_card_year = "2017", schoolid = as.character(id), schooltypecd = type, cts_class = as.numeric(cts_class), cts_pctdev = as.numeric(cts_pctdev)) %>% 
+  rename(district_nm = "distname", school_nm = "locname", tech_pct_class_wireless_curr_yr = "cts_class", tech_oneto_one_curr_yr = "cts_pctdev", retained_pct_curr_yr = "c3", gifted_pct_curr_yr = "c6", pct78hs_credit_curr_yr = "c1", princ_super_yrs_curr_yr = "c31") %>% 
+  select(any_of(tech_variables))
+
+tech_high_17 <- read_excel("../data/source/report-cards/rc_2017_high.xlsx", sheet = 2) %>%
+  clean_names() %>% 
+  mutate(report_card_year = "2017", schoolid = as.character(id), schooltypecd = type, cts_class = as.numeric(cts_class), cts_pctdev = as.numeric(cts_pctdev)) %>% 
+  rename(district_nm = "distname", school_nm = "locname", tech_pct_class_wireless_curr_yr = "cts_class", tech_oneto_one_curr_yr = "cts_pctdev", retained_pct_curr_yr = "c3", gifted_pct_curr_yr = "c6", pct78hs_credit_curr_yr = "c1", princ_super_yrs_curr_yr = "c31") %>% 
+  select(any_of(tech_variables))
+
+# chronic_absenteeism_rate = "" ?
+
+# 2018
+tech_18 <- read_excel("../data/source/additional-info/ai-2018.xlsx", sheet = 8) %>%
+  clean_names() %>% 
+  select(any_of(tech_variables))
+
+# 2019
+tech_19 <- read_excel("../data/source/additional-info/ai-2019.xlsx", sheet = 8) %>%
+  clean_names() %>% 
+  select(any_of(tech_variables))
+
+# 2020
+tech_20 <- read_excel("../data/source/additional-info/ai-2020.xlsx", sheet = 9) %>%
+  clean_names() %>% 
+  select(any_of(tech_variables)) %>% 
+  mutate(report_card_year = as.character(report_card_year), schoolid = as.character(schoolid), gifted_pct_curr_yr = as.numeric(gifted_pct_curr_yr), pct78hs_credit_curr_yr = as.numeric(pct78hs_credit_curr_yr), princ_super_yrs_curr_yr = as.numeric(princ_super_yrs_curr_yr), tech_pct_class_wireless_curr_yr = as.numeric(tech_pct_class_wireless_curr_yr), tech_oneto_one_curr_yr = as.numeric(tech_oneto_one_curr_yr), chronic_absenteeism_rate = as.numeric(chronic_absenteeism_rate))
+
+# 2021
+tech_21 <- read_excel("../data/source/additional-info/ai-2021.xlsx", sheet = 9) %>%
+  clean_names() %>% 
+  select(any_of(tech_variables)) %>%
+  mutate(report_card_year = as.character(report_card_year), schoolid = as.character(schoolid), gifted_pct_curr_yr = as.numeric(gifted_pct_curr_yr), pct78hs_credit_curr_yr = as.numeric(pct78hs_credit_curr_yr), princ_super_yrs_curr_yr = as.numeric(princ_super_yrs_curr_yr), tech_pct_class_wireless_curr_yr = as.numeric(tech_pct_class_wireless_curr_yr), tech_oneto_one_curr_yr = as.numeric(tech_oneto_one_curr_yr), chronic_absenteeism_rate = as.numeric(chronic_absenteeism_rate), retained_pct_curr_yr = as.numeric(retained_pct_curr_yr))
+
+
+# Bind years
+tech_bind = tech_dist_17 %>%
+  bind_rows(tech_elem_17) %>%
+  bind_rows(tech_middle_17) %>%
+  bind_rows(tech_high_17) %>% 
+  bind_rows(tech_18) %>% 
+  bind_rows(tech_19) %>% 
+  bind_rows(tech_20) %>% 
+  bind_rows(tech_21) %>%
+  rename(any_of(key)) %>%
+  mutate(len_str = nchar(school_id)) %>% 
+  mutate(school_id = if_else(len_str == 6, paste0("0", school_id), school_id)) %>% 
+  select(-len_str) %>%
+  # Some schools are duplicated on all variables. Remove duplicates.
+  distinct(.keep_all = TRUE)
+
+```
+
+
+#### Chronic absenteeism, English learners, students with disabilities
+```{r}
+stu_vars <- c("report_card_year", "district_nm", "school_nm", "schoolid", "schooltypecd", "chronic_absenteeism_rate", "n_total_di", "n_total_el")
+
+# 2017 - not available (Variables location sheet says C4 is chronic absenteeism rate but the actual spreadsheet says C4 is "Attendance rate - our school.")
+
+# 2018
+stu_18 <- read_excel("../data/source/additional-info/ai-2018.xlsx", sheet = 8) %>%
+  clean_names() %>% 
+  select(any_of(stu_vars))
+
+# 2019 - not available
+
+# 2020 - not available
+
+# 2021
+stu_21 <- read_excel("../data/source/additional-info/ai-2021.xlsx", sheet = 10) %>%
+  clean_names() %>% 
+  rename(chronic_absenteeism_rate = "pct_chronic_all") %>% 
+  select(any_of(stu_vars)) %>% 
+  mutate(report_card_year = as.character(report_card_year), schoolid = as.character(schoolid), n_total_el = as.numeric(n_total_el))
+
+  
+# Bind years
+students_bind = bind_rows(stu_18) %>%
+  bind_rows(stu_21) %>%
+  rename(any_of(key)) %>%
+  mutate(len_str = nchar(school_id)) %>% 
+  mutate(school_id = if_else(len_str == 6, paste0("0", school_id), school_id)) %>% 
+  select(-len_str) %>%
+  # Some schools are duplicated on all variables. Remove duplicates.
+  distinct(.keep_all = TRUE)
+
+```
+
+
+#### Safety
+```{r}
+safety_vars <- c("report_card_year", "district_nm", "school_nm", "schoolid", "schooltypecd", "par_child_feels_safe", "par_tch_stop_bully", "par_num_responses", "tch_i_feel_safe", "tch_rules_enforced", "tch_num_responses", "ocr_firearm_num", "ocr_rape", "ocr_sex_assault", "ocr_robw_weapon", "ocr_robw_firearm", "ocr_rob_no_weapon", "ocr_phys_attachw_weapon", "ocr_phys_attackw_firearm", "ocr_phys_attach_no_weapon", "ocr_threat_phys_attachw_weapon", "ocr_threat_phys_attackw_firearm", "ocr_threat_phys_attach_no_weapon", "ocr_in_school_suspension", "ocr_out_of_school_suspension", "ocr_expelled", "ocr_arrests_referrals", "ocr_bully_harass")
+
+
+# 2017 - not available
+
+# 2018 - Suspensions, expulsions, bullying incidents, school related arrests and referrals to law enforcement not available
+safety_18 <- read_excel("../data/source/additional-info/ai-2018.xlsx", sheet = 10) %>%
+  clean_names() %>% 
+  select(any_of(safety_vars)) %>% 
+  mutate(par_child_feels_safe = as.numeric(par_child_feels_safe), par_tch_stop_bully = as.numeric(par_tch_stop_bully), par_num_responses = as.numeric(par_num_responses), tch_i_feel_safe = as.numeric(tch_i_feel_safe), tch_rules_enforced = as.numeric(tch_rules_enforced), tch_num_responses = as.numeric(tch_rules_enforced))
+
+# 2019
+safety_19 <- read_excel("../data/source/additional-info/ai-2019.xlsx", sheet = 10) %>%
+  clean_names() %>% 
+  select(any_of(safety_vars))
+
+# 2020 - parent and teacher opinions not available
+safety_20 <- read_excel("../data/source/additional-info/ai-2020.xlsx", sheet = 11) %>%
+  clean_names() %>%
+  rename(schoolid = "sidn") %>% 
+  select(any_of(safety_vars)) %>% 
+  mutate(report_card_year = as.character(report_card_year), ocr_firearm_num = as.numeric(ocr_firearm_num), ocr_rape = as.numeric(ocr_rape), ocr_sex_assault = as.numeric(ocr_sex_assault), ocr_robw_weapon = as.numeric(ocr_robw_weapon), ocr_robw_firearm = as.numeric(ocr_robw_firearm), ocr_rob_no_weapon = as.numeric(ocr_rob_no_weapon), ocr_phys_attachw_weapon = as.numeric(ocr_phys_attachw_weapon), ocr_phys_attackw_firearm = as.numeric(ocr_phys_attackw_firearm), ocr_phys_attach_no_weapon = as.numeric(ocr_phys_attach_no_weapon), ocr_threat_phys_attachw_weapon = as.numeric(ocr_threat_phys_attachw_weapon), ocr_threat_phys_attackw_firearm = as.numeric(ocr_threat_phys_attackw_firearm), ocr_threat_phys_attach_no_weapon = as.numeric(ocr_threat_phys_attach_no_weapon), ocr_in_school_suspension = as.numeric(ocr_in_school_suspension), ocr_out_of_school_suspension = as.numeric(ocr_out_of_school_suspension), ocr_expelled = as.numeric(ocr_expelled), ocr_arrests_referrals = as.numeric(ocr_arrests_referrals), ocr_bully_harass = as.numeric(ocr_bully_harass))
+
+
+# 2021 
+safety_21 <- read_excel("../data/source/additional-info/ai-2021.xlsx", sheet = 12) %>%
+  clean_names() %>% 
+  rename(schoolid = "sidn") %>% 
+  select(any_of(safety_vars)) %>% 
+  mutate(report_card_year = as.character(report_card_year), par_child_feels_safe = as.numeric(par_child_feels_safe), par_tch_stop_bully = as.numeric(par_tch_stop_bully), par_num_responses = as.numeric(par_num_responses), tch_i_feel_safe = as.numeric(tch_i_feel_safe), tch_rules_enforced = as.numeric(tch_rules_enforced), tch_num_responses = as.numeric(tch_rules_enforced), ocr_firearm_num = as.numeric(ocr_firearm_num), ocr_rape = as.numeric(ocr_rape), ocr_sex_assault = as.numeric(ocr_sex_assault), ocr_robw_weapon = as.numeric(ocr_robw_weapon), ocr_robw_firearm = as.numeric(ocr_robw_firearm), ocr_rob_no_weapon = as.numeric(ocr_rob_no_weapon), ocr_phys_attachw_weapon = as.numeric(ocr_phys_attachw_weapon), ocr_phys_attackw_firearm = as.numeric(ocr_phys_attackw_firearm), ocr_phys_attach_no_weapon = as.numeric(ocr_phys_attach_no_weapon), ocr_threat_phys_attachw_weapon = as.numeric(ocr_threat_phys_attachw_weapon), ocr_threat_phys_attackw_firearm = as.numeric(ocr_threat_phys_attackw_firearm), ocr_threat_phys_attach_no_weapon = as.numeric(ocr_threat_phys_attach_no_weapon), ocr_in_school_suspension = as.numeric(ocr_in_school_suspension), ocr_out_of_school_suspension = as.numeric(ocr_out_of_school_suspension), ocr_expelled = as.numeric(ocr_expelled), ocr_arrests_referrals = as.numeric(ocr_arrests_referrals), ocr_bully_harass = as.numeric(ocr_bully_harass))
+
+
+# Bind years
+safety_bind = bind_rows(safety_18) %>% 
+  bind_rows(safety_19) %>% 
+  bind_rows(safety_20) %>% 
+  bind_rows(safety_21) %>% 
+  rename(any_of(key)) %>% 
+  # All school ids are 6 characters. Do not need to introduce leading 0s. Also, no duplicates, so do not need to distinct.
+  # mutate(len_str = nchar(school_id)) %>% 
+  # mutate(school_id = if_else(len_str == 6, paste0("0", school_id), school_id)) %>% 
+  # select(-len_str) %>%
+  # distinct(.keep_all = TRUE) %>% 
+  # Sum all violent incidents
+  mutate(ocr_violent_all = ocr_rape + ocr_sex_assault + ocr_robw_weapon + ocr_robw_firearm + ocr_phys_attachw_weapon + ocr_phys_attackw_firearm + ocr_threat_phys_attachw_weapon + ocr_threat_phys_attackw_firearm) %>% 
+  mutate(ocr_nonviolent_all = ocr_rob_no_weapon + ocr_phys_attach_no_weapon + ocr_threat_phys_attach_no_weapon)
+  
+```
+
+
+### Load and clean enrollment and demographic data
+#### Schools
+```{r}
+# 2017
+school_hc_17 <- read_excel("../data/source/headcounts/2016_17_school_headcount_demographics.xlsx", col_names = c("school_id", "district", "school", "total_actively_enrolled_students", "gender_female", "gender_male", "black_or_african_american", "american_indian", "asian_hawaiian_pacific_islander", "hispanic", "white", "race_missing"), sheet = 1) %>%
+  slice(7:1218) %>%
+  mutate(year = "2017")
+
+
+# 2018
+school_hc_18 <- read_excel("../data/source/headcounts/2017_18_school_headcount_demographics.xlsx", col_names = c("school_id", "district", "school", "total_actively_enrolled_students", "empty1", "gender_female", "gender_male", "gender_missing", "empty2", "black_or_african_american", "american_indian", "asian", "hispanic_or_latino", "hawaiian_or_other_pacific_islander", "two_or_more_races", "white", "race_missing"), sheet = 1) %>%
+  remove_empty(c('rows', "cols")) %>% 
+  select(-empty2) %>% 
+  slice(8:1220) %>%
+  mutate(year = "2018")
+
+
+# 2019
+school_hc_19 <- read_excel("../data/source/headcounts/2018_19_school_headcount_demographics.xlsx", col_names = c("school_id", "district", "school", "total_actively_enrolled_students", "gender_female", "gender_male", "gender_missing", "black_or_african_american", "american_indian", "asian", "hispanic_or_latino", "hawaiian_or_other_pacific_islander", "two_or_more_races", "white", "race_missing", "pupils_in_poverty"), sheet = 1) %>%
+  slice(8:1227) %>% 
+  select(-pupils_in_poverty) %>% 
+  mutate(year = "2019")
+
+
+# 2020
+school_hc_20 <- read_excel("../data/source/headcounts/2019_20_school_headcount_demographics.xlsx", col_names = c("school_id", "district", "school", "total_actively_enrolled_students", "gender_female", "gender_male", "gender_missing", "black_or_african_american", "american_indian", "asian", "hispanic_or_latino", "hawaiian_or_other_pacific_islander", "two_or_more_races", "white", "race_missing", "pupils_in_poverty"), sheet = 1) %>%
+  slice(8:1229) %>% 
+  select(-pupils_in_poverty) %>% 
+  mutate(year = "2020")
+
+
+# 2021 loaded above (for use in creating school list)
+
+
+# Bind across years for schools
+school_bind = school_hc_17 %>% 
+  bind_rows(school_hc_18) %>% 
+  bind_rows(school_hc_19) %>% 
+  bind_rows(school_hc_20) %>% 
+  bind_rows(school_hc_21) %>% 
+  mutate(total_actively_enrolled_students = as.integer(total_actively_enrolled_students),
+         gender_female = as.integer(gender_female),
+         gender_male = as.integer(gender_male),
+         gender_missing = as.integer(gender_missing),
+         black_or_african_american = as.integer(black_or_african_american),
+         american_indian = as.integer(american_indian),
+         asian = as.integer(asian),
+         hispanic_or_latino = as.integer(hispanic_or_latino),
+         hawaiian_or_other_pacific_islander = as.integer(hawaiian_or_other_pacific_islander),
+         two_or_more_races = as.integer(two_or_more_races),
+         white = as.integer(white),
+         race_missing = as.integer(race_missing),
+         asian_hawaiian_pacific_islander = as.integer(asian_hawaiian_pacific_islander),
+         hispanic = as.integer(hispanic)
+         )
+
+# Make final headcount df
+school_hc_all_years <- school_bind %>% 
+  # Sum across certain races because racial categories set by the state differ across years. P&C team opted for combining races other than white and Black into one "other races" category. Also, in this step we will lose data on students whose race was categorized as "missing," so the sum across ALL races may not equal the total_actively_enrolled students. Across the entire state, the number of students in this category was no higher than XX in any of the years we are examining.
+  mutate(all_other_races = rowSums(school_bind[,c("american_indian","asian", "hispanic_or_latino","hawaiian_or_other_pacific_islander","two_or_more_races","asian_hawaiian_pacific_islander","hispanic")], na.rm=TRUE)) %>% 
+  # Deselect unneeded columns
+  select(-american_indian,-asian,-hispanic_or_latino,-hawaiian_or_other_pacific_islander,-two_or_more_races,-race_missing,-asian_hawaiian_pacific_islander,-hispanic)  %>% 
+  # Calculate percentages
+  mutate(percent_female = gender_female/total_actively_enrolled_students*100, percent_male = gender_male/total_actively_enrolled_students*100, percent_gender_missing = gender_missing/total_actively_enrolled_students*100, percent_black_aa = black_or_african_american/total_actively_enrolled_students*100, percent_white = white/total_actively_enrolled_students*100, percent_all_other_races = all_other_races/total_actively_enrolled_students*100)
+
+```
+
+
+### District enrollment and demographics
+```{r}
+# 2017
+district_hc_17 <- read_excel("../data/source/headcounts/2016_17_district_headcount_demographics.xlsx", col_names = c("extra", "district_id", "district", "total_actively_enrolled_students", "gender_female", "gender_male", "black_or_african_american", "american_indian", "asian_or_pacific_islander", "hispanic", "white", "race_missing"), sheet = 1) %>%
+  select(-"extra") %>% 
+  slice(7:93) %>%
+  mutate(year = "2017")
+
+
+# 2018
+district_hc_18 <- read_excel("../data/source/headcounts/2017_18_district_headcount_demographics.xlsx", col_names = c("district_id", "district", "total_actively_enrolled_students", "empty1", "gender_female", "gender_male", "gender_missing", "empty2", "black_or_african_american", "american_indian", "asian", "hispanic_or_latino", "hawaiian_or_other_pacific_islander", "two_or_more_races", "white", "race_missing"), sheet = 1) %>%
+  remove_empty(c('rows', "cols")) %>% 
+  slice(8:94) %>%
+  mutate(year = "2018") %>% 
+  mutate(schoolid = paste0(district_id, "999"))
+  
+
+# 2019
+district_hc_19 <- read_excel("../data/source/headcounts/2018_19_district_headcount_demographics.xlsx", col_names = c("district_id", "district", "total_actively_enrolled_students", "gender_female", "gender_male", "gender_missing", "black_or_african_american", "american_indian", "asian", "hispanic_or_latino", "hawaiian_or_other_pacific_islander", "two_or_more_races", "white", "race_missing", "pupils_in_poverty"), sheet = 1) %>%
+  slice(8:95) %>%
+  select(-pupils_in_poverty) %>% 
+  mutate(year = "2019")
+
+
+# 2020
+district_hc_20 <- read_excel("../data/source/headcounts/2019_20_district_headcount_demographics.xlsx", col_names = c("district_id", "district", "total_actively_enrolled_students", "gender_female", "gender_male", "gender_missing", "black_or_african_american", "american_indian", "asian", "hispanic_or_latino", "hawaiian_or_other_pacific_islander", "two_or_more_races", "white", "race_missing", "pupils_in_poverty"), sheet = 1) %>%
+  slice(8:93) %>%
+  select(-pupils_in_poverty) %>% 
+  mutate(year = "2020")
+
+
+# 2021
+district_hc_21 <- read_excel("../data/source/headcounts/2020_21_district_headcount_demographics.xlsx", col_names = c("district_id", "district", "total_actively_enrolled_students", "gender_female", "gender_male", "gender_missing", "black_or_african_american", "american_indian", "asian", "hispanic_or_latino", "hawaiian_or_other_pacific_islander", "two_or_more_races", "white", "race_missing", "pupils_in_poverty"), sheet = 1) %>%
+  slice(8:94) %>% 
+  select(-pupils_in_poverty) %>% 
+  mutate(year = "2021")
+
+
+#### Create a dataframe with district headcounts for all years
+# Bind districts across years
+district_bind = district_hc_17 %>%
+  bind_rows(district_hc_18) %>%
+  bind_rows(district_hc_19) %>% 
+  bind_rows(district_hc_20) %>% 
+  bind_rows(district_hc_21) %>% 
+  # Add trailing "999" to match ids in other datasets
+  mutate(district_id = paste0(district_id, "999")) %>%
+  # Remove unneeded districts
+  filter(!(district_id %in% drop_districts)) %>% 
+  # Many of the columns are stored as character values. Convert to numbers.
+  mutate(total_actively_enrolled_students = as.numeric(total_actively_enrolled_students),
+         gender_female = as.numeric(gender_female),
+         gender_male = as.numeric(gender_male),
+         gender_missing = as.numeric(gender_missing),
+         black_or_african_american = as.numeric(black_or_african_american),
+         american_indian = as.numeric(american_indian),
+         asian = as.numeric(asian),
+         hispanic_or_latino = as.numeric(hispanic_or_latino),
+         hawaiian_or_other_pacific_islander = as.numeric(hawaiian_or_other_pacific_islander),
+         two_or_more_races = as.numeric(two_or_more_races),
+         white = as.numeric(white),
+         race_missing = as.numeric(race_missing),
+         asian_or_pacific_islander = as.numeric(asian_or_pacific_islander),
+         hispanic = as.numeric(hispanic)
+         )
+
+
+# Make final df
+district_hc_all_years <- district_bind %>%
+  # Sum across certain races because racial categories set by the state differ across years. P&C team opted for combining races other than white and Black into one "other races" category. Also, in this step we will lose data on students whose race was categorized as "missing," so the sum across ALL races may not equal the total_actively_enrolled students. Across the entire state, the number of students in this category was no higher than XX in any of the years we are examining.
+  mutate(all_other_races = rowSums(district_bind[,c("american_indian","asian", "hispanic_or_latino","hawaiian_or_other_pacific_islander","two_or_more_races", "asian_or_pacific_islander","hispanic")], na.rm=TRUE)) %>%
+  # Deselect unneeded columns
+  select(-american_indian,-asian,-hispanic_or_latino,-hawaiian_or_other_pacific_islander,-two_or_more_races,-race_missing,-asian_or_pacific_islander,-hispanic) %>% 
+  # Calculate percentages
+  mutate(percent_female = gender_female/total_actively_enrolled_students*100, percent_male = gender_male/total_actively_enrolled_students*100, percent_gender_missing = gender_missing/total_actively_enrolled_students*100, percent_black_aa = black_or_african_american/total_actively_enrolled_students*100, percent_white = white/total_actively_enrolled_students*100, percent_all_other_races = all_other_races/total_actively_enrolled_students*100)
+
+
+```
+
+
+### Join all variables
+```{r}
+# Join academic variables
+academic_variables <- acad_em_bind %>%
+  # Names match in these two dfs, so no need to specify which columns we're joining on
+  full_join(acad_high_bind) %>% 
+  # Other variables come from different spreadsheets. Specify join columns
+  full_join(act_bind, by = c("year", "school_id", "type")) %>% 
+  full_join(career_bind, by = c("year", "school_id", "type")) %>% 
+  full_join(ELprog_bind, by = c("year", "school_id", "type")) %>% 
+  full_join(grad_bind, by = c("year", "school_id")) %>% 
+  full_join(dropout_bind, by = c("year", "school_id", "type")) %>% 
+  # Remove school and district names in prep for joining with other variable dfs
+  select(-school.x.x.x, -district.x.x.x, -school.x, -district.x, -school.y, -district.y, -school.x.x, -district.x.x, -school.y.y, -district.y.y)
+
+
+# Checks - grad, act, career, ELprog_bind (primaries, districts 2020), grad (districts 2017)
+# anti <- grad_bind %>% 
+#   anti_join(academic_variables, by = c("year", "school_id"))
+
+# Join climate variables
+climate_variables <- teachers_bind %>% 
+  full_join(tech_bind, by = c("year", "school_id", "type")) %>% 
+  full_join(finance_bind, by = c("year", "school_id", "type")) %>% 
+  full_join(students_bind, by = c("year", "school_id", "type")) %>%
+  full_join(safety_bind, by = c("year", "school_id", "type")) %>% 
+  # Remove school and district names in prep for joining with other variable dfs
+  select(-school.x, -district.x, -school.y, -district.y, -school.x.x, -district.x.x, -school.y.y, -district.y.y)
+  
+
+# Checks - 
+# anti <- teachers_bind %>%
+#   anti_join(tech_bind, by = c("year", "school_id", "type"))
+
+# Join academic df, climate df
+all_variables <- academic_variables %>% 
+  full_join(climate_variables, by = c("school_id", "year", "type"))
+
+
+## Create separate dataframes for districts and schools and join with headcounts
+# Districts 
+district_av <- all_variables %>%
+  filter(type == "D") %>% 
+  rename(district_id = school_id) %>% 
+  # Join with headcount
+  left_join(district_hc_all_years, by = c("district_id", "year"))
+
+  ### Some with missing years?
+
+# Schools
+school_av <- all_variables %>%
+  filter(type != "D", type !="S") %>% 
+  # Join with headcount -- challenge in that there's no "type" column ----------------- Maybe school and district lists should be joined with headcounts before joining with other variables??
+  left_join(school_hc_all_years, by = c("school_id", "year"))
+
+
+######### There are 88 NAs in the type column ... what to do with these entries? All but 2 are from the grad variables df and all but 1 of those are from 2017
+
+```
+
+
+
+
+# Join with canonical lists. This will remove unnecessary schools and bring in address data.
+```{r}
+# District
+district_full_data <- district_list %>% 
+  left_join(district_av, by = "district_id") %>% 
+  # Calculate percentages of English language learners and students without (the latter is necessary for charts)
+  mutate(pct_el = (n_total_el/enrollment)*100, pct_non_el = 100-pct_el) %>%  
+  # Calculate percentages of students with disabilities and students without (the latter is necessary for charts)
+  mutate(pct_disabilities = (n_total_di/enrollment)*100, pct_non_di = 100-pct_disabilities) %>%
+  # Calculate percentages of students not in poverty (necessary for charts)
+  mutate(pct_not_in_poverty = 100-studentsin_poverty_pct_curr_yr) %>% 
+  # Remove carriage returns
+  clean_names() %>% 
+  select(-district_y_y_y,-school_y_y_y,-district_y,-district_x,-school_x) %>% 
+  mutate(district = gsub("\r?\n|\r", " ", district)) %>% 
+  mutate(district_alt = gsub("\r?\n|\r", " ", district_alt)) %>% 
+  mutate(supername = gsub("\r?\n|\r", " ", supername)) %>% 
+  mutate(street = gsub("\r?\n|\r", " ", street)) %>% 
+  mutate(city = gsub("\r?\n|\r", " ", city)) %>% 
+  mutate(chair = gsub("\r?\n|\r", " ", chair)) %>% 
+  select(year, 1:14,16:118) %>% 
+  select(-school_y)
+write_csv(district_full_data, "../data/processed/etl_district_full_data.csv")
+
+# School
+school_full_data <- school_list_geocoded %>% 
+  left_join(school_av, by = "school_id") %>% 
+  # Calculate percentages of English language learners and students without (the latter is necessary for charts)
+  mutate(pct_el = (n_total_el/enrollment)*100, pct_non_el = 100-pct_el) %>%  
+  # Calculate percentages of students with disabilities and students without (the latter is necessary for charts)
+  mutate(pct_disabilities = (n_total_di/enrollment)*100, pct_non_di = 100-pct_disabilities) %>%
+  # Calculate percentages of students not in poverty (necessary for charts)
+  mutate(pct_not_in_poverty = 100-studentsin_poverty_pct_curr_yr) %>% 
+  # Remove carriage returns
+  clean_names() %>%
+  select(-district_y_y_y,-school_y_y_y,-district_y,-district_x,-school_x,-school_y) %>% 
+  mutate(school = gsub("\r?\n|\r", " ", school)) %>% 
+  mutate(district = gsub("\r?\n|\r", " ", district)) %>% 
+  mutate(district_alt = gsub("\r?\n|\r", " ", district_alt)) %>% 
+  mutate(street = gsub("\r?\n|\r", " ", street)) %>% 
+  mutate(hdphone = gsub("\r?\n|\r", " ", hdphone)) %>% 
+  mutate(url = gsub("\r?\n|\r", " ", url)) %>% 
+  mutate(city = gsub("\r?\n|\r", " ", city)) 
+
+  
+```
+
+
+
+
+## Aadit made this df for search script. Kara, feel free to revise and / or delete
+```{r}
+schools = school_full_data %>% 
+  select(school_id,school) %>% 
+  rename(id = school_id,
+         name = school) %>% 
+  mutate(type = "school") %>% 
+  distinct()
+
+districts = district_full_data %>% 
+  select(district_id, district) %>% 
+  rename(id = district_id,
+         name = district) %>% 
+  mutate(type = "district") %>% 
+  distinct()
+
+all_search = districts %>% 
+  bind_rows(schools)
+
+```
+
+## Make key to variable names
+```{r}
+vars_d = colnames(district_full_data)
+variables_district = data.frame(variables = vars_d)
+
+vars_s = colnames(school_full_data)
+variables_school = data.frame(variables = vars_s)
+
+```
+
+
+
+## Export data
+```{r}
+
+write_csv(district_list, "../data/processed/etl_district_list.csv")
+write_csv(school_list, "../data/processed/etl_school_list.csv")
+
+write_csv(district_full_data, "../data/processed/etl_district_full_data.csv")
+write_csv(school_full_data, "../data/processed/etl_school_full_data.csv")
+
+
+write_csv(variables_district, "../data/processed/etl_variables_district.csv")
+write_csv(variables_school, "../data/processed/etl_variables_school")
+
+
+write_csv(all_search, "../data/processed/all_search.csv")
+
+```
+
+
+
+
+############ IN PROGRESS, PROCEED WITH CAUTION ############
+
+### QUESTIONS
+```{r}
+# Students in poverty occurs in two locations. Are they the same?
+# Teacher salary appears in two different tabs in the additional info files. Are they the same?
+# Why are there only -1s in the percent expenditures for instruction in 2017 elementary?
+```
+
+
+# School list anti-joins to figure out what's missing from each dataset
+```{r}
+# Which schools are in report card main and not in report card academic tabs?
+missing_from_academic <- rc_main %>% 
+  anti_join(rc_academic, by = "school_id") %>% 
+  select(district, school, school_id, gradespan, type) %>% 
+  mutate(in_rc_main = "TRUE")
+  #*** Hcs Scholars Academy High School (Horry County Schools, id 2601075) is in report card main, but does not appear in academic achievement data.          (Confirmed with a manual search in the source data.)
+  #*There are 50 primary schools that appear in report card main and not academic. We are excluding them from the school key.
+  
+# Which schools are in report card academic and not report card main?
+missing_from_main <- rc_academic %>% 
+  anti_join(rc_main, by = "school_id") %>% 
+  select(district, school, school_id, schooltypecd) %>% 
+  mutate(in_rc_academic = "TRUE")
+  #*** The report card academic page includes Palmetto Unified as a high school (Palmetto Unified School District, id 5209001) but it is not in main. This is part of the Department of Corrections and we are excluding it from the school key.
+
+
+# Which schools are in headcount and not in report card main + academic?
+missing_from_rc_list <- school_hc_21 %>% 
+  anti_join(rc_list, by = "school_id") %>% 
+  select(district, school, school_id) %>% 
+  mutate(in_hc = "TRUE")
+  #*** There are 62 schools in the headcount that are not in rc_list. Most are "elementary schools" that include only K-2 or K-3. Since these are coded in rc_main as primary schools, they have dropped out at this stage. Swansea High Freshman Academy (id 3204037, grade 9 only) is also missing. We are going to exclude it for now while getting more info from Sara Gregory.
+
+
+
+# Which schools are in report card main + academic and not in headcount?
+missing_from_headcount <- rc_list %>% 
+  anti_join(school_hc_21, by = "school_id") %>% 
+  select(district.x, school.x, school_id, gradespan, type) %>% 
+  mutate(in_rc_list = "TRUE")
+  #*** There are no schools in report_card list that are not in headcount.
+
+
+# Which schools are in additional info main that aren't in report card main?
+# missing_from_main_y <- rc_main %>% 
+#   anti_join(ai_21_main, by = "school_id") %>% 
+#   select(district, school, school_id) %>% 
+#   mutate(in_hc = "TRUE")
+#*** The school list for additional info main is the same as report cards. We do not need to include this dataset in the joins for the school key.
+
+
+# Create df of missing schools
+missing_schools <- missing_from_academic %>% 
+  bind_rows(missing_from_academic_x) %>% 
+  bind_rows(missing_from_headcount) %>% 
+  bind_rows(missing_from_headcount_x) %>% 
+  bind_rows(missing_from_main) %>% 
+  bind_rows(missing_from_main_x) %>% 
+  distinct(school_id, .keep_all = TRUE)
+
+#write_csv(missing_schools, "../data/processed/etl_missing_schools.csv")
+
+
+
+# Create df of schools that are in all datasets
+schools_master <- rc_academic%>% 
+  inner_join(rc_main, by = "school_id") %>% 
+  inner_join(school_hc_21, by = "school_id")
+
+nrow(missing_schools)
+nrow(schools_master)
+
+```
+
+

@@ -1,0 +1,451 @@
+district,school,district_id,street,city,state,zip,gradespan,enrollment,hdphone,url,supername,chair,teacher_count,district_alt
+"Abbeville
+County School
+District","Abbeville County School
+District",0160999,400 Greenville St,Abbeville,SC,29620,PK-12,2924,864-366-5427,acsdsc.org,"Dr. Mason
+Gary",Brad Evans,223,Abbeville 60
+"Aiken County
+Public School
+District","Aiken County Public School
+District",0201999,"1000 Brookhaven
+Drive",Aiken,SC,29803,PK-12,22538,803-641-2428,http://www.acpsd.net,"Mr. King
+Laurence","Dr. John
+Bradley",1546,Aiken 01
+"Allendale
+County Schools",Allendale County Schools,0301999,"3249 Allendale-Fairfax
+Hwy",Fairfax,SC,29827,PK-12,1071,8035844603,https://www.acs.k12.sc.us/,"Dr. Margaret
+Gilmore",Not applicable,79,Allendale 01
+"Anderson
+School District
+One","Anderson School District
+One",0401999,801 N. Hamilton Street,Williamston,SC,29697,PK-12,10116,8648477344,https://www.anderson1.org,"Mr. G. Robbie
+Binnicker","Mrs. Nancy
+Upton",615,Anderson 01
+"Anderson
+School District
+Two","Anderson School District
+Two",0402999,10990 BHP Hwy,Honea Path,SC,29654,PK-12,3404,864-369-7364,http://www.anderson2.org,"Donald
+Andrews",Jimmy Ouzts,224,Anderson 02
+"Anderson
+School District
+Three","Anderson School District
+Three",0403999,335 West Front Street,Iva,SC,29655,PK-12,2549,864-348-6196,https://acsd3.org,Kathy D. Hipp,"Mr. Tripp
+Bouknight",173,Anderson 03
+"Anderson
+District 4",Anderson District 4,0404999,315 East Queen Street,Pendleton,SC,29670,PK-12,2755,864-403-2000,https://www.anderson4.org/,"Dee
+Christopher","Dr. Tom
+Dobbins",193,Anderson 04
+"Anderson
+School District
+Five","Anderson School District
+Five",0405999,400 Pearman Dairy Rd,Anderson,SC,29621,PK-12,12771,864-260-5000,www.anderson5.net,"Thomas A.
+Wilson","Rick
+Bradshaw",850,Anderson 05
+"Bamberg
+School District 1",Bamberg School District 1,0501999,3830 Faust Street,Bamberg,SC,29003,PK-12,1194,803-245-3053,https://www.bamberg1.net,Dottie Brown,"Mrs. Janeth
+Walker",90,Bamberg 01
+"Bamberg
+School District 2",Bamberg School District 2,0502999,Holly St,Denmark,SC,29042,PK-12,639,803-793-3346,https://sc02209464.schoolwires.net/,"Dr. Thelma
+Sojourner","Beverly
+Bonaparte",53,Bamberg 02
+"Barnwell School
+District 19",Barnwell School District 19,0619999,"446 Country Club
+Road",Blackville,SC,29817,PK-12,565,803-284-5605,www.barnwell19.k12.sc.us,"David W.
+Corder",Karen Jowers,34,Barnwell 19
+"Williston School
+District
+(Barnwell 29)","Williston School District
+(Barnwell 29)",0629999,12255 Main Street,Williston,SC,29853,PK-12,802,8032667878,www.williston.k12.sc.us,"Dr. Marcella
+Shaw",Ronald Brown,58,Barnwell 29
+"Barnwell School
+District 45",Barnwell School District 45,0645999,770 Hagood Avenue,Barnwell,SC,29812,PK-12,2038,803-541-1300,https://www.barnwell45.org/,"Crystal
+Stapleton","Rosey
+Anderson",137,Barnwell 45
+"Beaufort County
+School District","Beaufort County School
+District",0701999,PO Drawer 309,Beaufort,SC,29901,PK-12,21219,843-322-2300,http://beaufortschools.net/,"Dr. Frank
+Rodriguez","Dr. Christina
+Gwozdz",1710,Beaufort 01
+"Berkeley County
+School District","Berkeley County School
+District",0801999,107 East Main Street,Moncks Corner,SC,29461,PK-12,36575,843-899-8600,http://www.bcsdschools.net/,"Dr. Eddie
+Ingram","Mr. David
+Barrow",2293,Berkeley 01
+"Calhoun County
+Schools",Calhoun County Schools,0901999,125 Herlong Avenue,Saint Matthews,SC,29135,PK-12,1590,8036557310,ccpsonline.net,"Dr. Steve
+Aaron Wilson",Gary Porth,119,Calhoun 01
+"Charleston
+County School
+District","Charleston County School
+District",1001999,75 Calhoun Street,Charleston,SC,29401,PK-12,48330,843-937-6300,https://www.ccsdschools.com/,"Dr. Gerrita
+Postlewait","Rev. Dr. Eric
+Mack",3651,Charleston 01
+"Cherokee
+County School
+District 1","Cherokee County School
+District 1",1101999,141 Twin Lake Road,Gaffney,SC,29341,PK-12,7882,864-206-2201,www.cherokee1.org/home,Dr. Dana Fall,"Mr. Johnny
+Sarratt",589,Cherokee 01
+"Chester County
+School District","Chester County School
+District",1201999,"509 District Office
+Drive",Chester,SC,29706,PK-12,4860,803-581-9500,https://www.chester.k12.sc.us/,"Dr. Antwon
+Sutton","Mr. Doug
+Shannon",370,Chester 01
+"Chesterfield
+County School
+District","Chesterfield County School
+District",1301999,401 West Blvd,Chesterfield,SC,29709,PK-12,6772,843-623-2175,https://www.chesterfieldschools.org,"J. Harrison
+Goodwin","Wesley R.
+Miles",478,Chesterfield 01
+Clarendon 1,Clarendon 1,1401999,"PO Box 38
+12 South
+Church Street",Summerton,SC,29148,PK-12,654,8034852325,NA,"Barbara Ragin
+Champagne",Tony Junious,46,Clarendon 01
+"Clarendon
+School District
+Two","Clarendon School District
+Two",1402999,15 Major Drive,Manning,SC,29102,PK-12,2604,803-435-4435,http://www.clarendon2.k12.sc.us,"Dr. Shawn
+Johnson","Ethel W.
+Sweat",150,Clarendon 02
+Clarendon 3,Clarendon 3,1403999,"1177 Atkinson
+Street
+P.O. Drawer
+270",TURBEVILLE,SC,29162,PK-12,1236,8436592188,clarendon3.org,"Connie J.
+Dennis, Ph.D.","Jason
+Newsome",78,Clarendon 03
+"Colleton County
+School District","Colleton County School
+District",1501999,500 Forest Circle,WALTERBORO,SC,29488,PK-12,5138,8437824510,www.colleton.k12.sc.us,Mr. John Tidal,"Patricia
+Simmons",325,Colleton 01
+"Darlington
+County School
+District","Darlington County School
+District",1601999,120 E Smith Avenue,Darlington,SC,29532,PK-12,9239,843-398-5100,www.darlington.k12.sc.us,"Dr. Timothy
+Newman","Warren
+Jeffords",660,Darlington 01
+"Dillon School
+District Three",Dillon School District Three,1703999,205 King Street,Lattta,SC,29565,PK-12,1546,843-752-7101,www.dillon3.k12.sc.us,"Dr John M.
+Kirby, Jr.",Kyle Berry,77,Dillon 03
+"Dillon School
+District Four",Dillon School District Four,1704999,"1738 Highway 301
+North",Dillon,SC,29536,PK-12,3901,843-774-1200,www.dillon.k12.sc.us,"D. Ray
+Rogers","Earl Gleason,
+Jr.",236,Dillon 04
+"Dorchester
+School District
+Two","Dorchester School District
+Two",1802999,115 Devon Road,Summerville,SC,29483,PK-12,24684,843-873-2901,https://www.ddtwo.org,"Joseph R.
+Pye","Tanya
+Robinson/Gail
+Hughes",1596,Dorchester 02
+"Dorchester
+District Four",Dorchester District Four,1804999,500 Ridge St.,St. George,SC,29477,PK-12,2101,843-563-4535,https://www.dorchester4.k12.sc.us/home,"Dr. Kelvin
+Wymbs","Mrs. Phyllis
+Hughes",154,Dorchester 04
+"Edgefield
+County School
+District","Edgefield County School
+District",1901999,3 Par Drive,Johnston,SC,29832,PK-12,3207,803-275-4601,https://ecsd.edgefield.k12.sc.us/,"Dr. Kevin L.
+O’Gorman","Mrs. Robin
+Ball",249,Edgefield 01
+"Fairfield County
+School District","Fairfield County School
+District",2001999,"1226 US Highway 321
+By-Pass south",Winnsboro,SC,29180,PK-12,2414,803-635-4607,https://www.fairfield1.org/,Dr. J.R. Green,Henry Miller,255,Fairfield 01
+"Florence One
+Schools",Florence One Schools,2101999,319 South Irby Street,Florence,SC,29501,PK-12,15186,843-669-4141,www.f1s.org,"Richard
+O'Malley",Porter Stewart,1165,Florence 01
+"Florence County
+School District 2","Florence County School
+District 2",2102999,"2121 South Pamplico
+Highway",Pamplico,SC,29583,PK-12,1094,843-493-2502,https://www.fsd2.org/,"Neal Vincent,
+Ed.D.","Mr. Robert
+Singletary",71,Florence 02
+"Florence School
+District Three","Florence School District
+Three",2103999,125 S. Blanding St,Lake City,SC,29560,PK-12,3263,843-374-8652,125 S. Blanding St,"Dr. Laura
+Hickson","Barbara
+Bryant",232,Florence 03
+Florence 4,Florence 4,2104999,"304 Kemper Street 
+",Timmonsville,SC,29161,PK-12,681,843-346-3956,www.florence4.k12.sc.us,"Teresa
+Gamble -
+Executive
+District
+Administrator",Lille Joe,43,Florence 04
+"Florence School
+District Five","Florence School District
+Five",2105999,156 East Marion Street,Johnsonville,SC,29555,PK-12,1180,843-386-2358,https://www.fsd5.org/,Randy Smiley,"Faith
+Truesdale",86,Florence 05
+"Georgetown
+County School
+District","Georgetown County School
+District",2201999,2018 Church Street,Georgetown,SC,29440,PK-12,8479,843-436-7000,www.gcsd.k12.sc.us,"Mr. Keith
+Price","Mr. Jim
+Dumm",645,Georgetown 01
+"The School
+District Of
+Greenville
+County","The School District Of
+Greenville County",2301999,"301 E. Camperdown
+Way",Greenville,SC,29601,PK-12,74094,864-355-3100,www.greenville.k12.sc.us,"W. Burke
+Royster, PhD","Lynda
+Leventis-Wells",5032,Greenville 01
+"Greenwood
+School District
+50","Greenwood School District
+50",2450999,1855 Calhoun Road,Greenwood,SC,29649,PK-12,8646,864-941-5400,www.gwd50.org,"Dr. Steve
+Glenn",Ken Cobb,614,Greenwood 50
+"Ware Shoals
+School District
+51","Ware Shoals School
+District 51",2451999,"56 S Greenwood
+Ave",Ware Shoals,SC,29692,PK-12,934,8644567496,www.gwd51.org,"Dr. Fay
+Sprouse","Mr. Shanon
+Calvert",66,Greenwood 51
+"Greenwood
+School District
+52","Greenwood School District
+52",2452999,605 Johnston Road,Ninety Six,SC,29666,PK-12,1492,864-543-3100,www.greenwood52.org,"Dr. Rex S.
+Ward","Mr. Jeff
+Chapman",104,Greenwood 52
+"Hampton
+District One",Hampton District One,2501999,372 E Pine Street,Varnville,SC,29944,PK-12,1948,803-943-4576,www.hampton1.org,"Dr. Ronald
+Wilcox","Phillip
+Strother, Sr.",142,Hampton 01
+Hampton 2,Hampton 2,2502999,NA,NA,NA,NA,PK-12,645,NA,NA,NA,NA,47,Hampton 02
+"Horry County
+Schools",Horry County Schools,2601999,335 Four Mile Road,Conway,SC,29577,PK-12,44479,843-488-6700,www.horrycountyschools.net,"Dr. Rick
+Maxey","Ken
+Richardson",3113,Horry 01
+"Jasper County
+School District","Jasper County School
+District",2701999,"10942 N. Jacob Smart
+Blvd.",Ridgeland,SC,29936,PK-12,2664,843-489-8892,www.jcsd.net,"Dr. Rechel
+Anderson","Carolyn
+Bolden",169,Jasper 01
+"Kershaw County
+School District","Kershaw County School
+District",2801999,"2029 West DeKalb
+Street",Camden,SC,29020,PK-12,10763,803-432-8416,www.kcsdschools.net,"Dr. Shane
+Robbins","Dr. James P.
+Smith",684,Kershaw 01
+Lancaster,Lancaster,2901999,"300 South Catawba
+Street",Lancaster,SC,29720,PK-12,13940,8032894885,www.lancastercsd.com,"Jonathan
+Phipps",Robert Parker,904,Lancaster 01
+"Laurens County
+School District
+55","Laurens County School
+District 55",3055999,301 Hillcrest Drive,Laurens,SC,29360,PK-12,5333,864-984-3568,www.laurens55.org,"Dr. Ameca
+Thomas","Mrs. Cathy
+Little",388,Laurens 55
+"Laurens County
+School District
+56","Laurens County School
+District 56",3056999,"211 N. Broad
+Street
+Suite B",Clinton,SC,29325,PK-12,2827,864-833-0800,https://www.lcsd56.org/,"Dr. David C.
+O'Shields",Jim Barton,194,Laurens 56
+"Lee County
+School District",Lee County School District,3101999,310 Roland Street,"Bishopville, South
+Carolina",SC,29010,PK-12,1565,803-484-5327,www.leeschoolsk12.org,"Bernard
+McDaniel, Sr.","Ms. Sylvia
+Scott",85,Lee 01
+"Lexington
+County School
+District One","Lexington County School
+District One",3201999,"100 Tarrar Springs
+Road
+NA",Lexington,SC,29072,PK-12,27072,803-821-1000,http://www.lexdistrict1.com/,"Dr. Gregory
+Little","Anne Marie
+Green",1959,Lexington 01
+"Lexington
+School District
+Two","Lexington School District
+Two",3202999,715 Ninth Street,West Columbia,SC,29169,PK-12,8582,803-796-4708,www.lex2.org,"Dr. Nicolas
+Wade","Christina
+Rucker",636,Lexington 02
+"Lexington
+County School
+District Three","Lexington County School
+District Three",3203999,"338 West Columbia
+Avenue",Batesburg-Leesville,SC,29006,PK-12,2020,(803)532-4423,www.lex3.org,"Dr. Ashley
+Atkinson","Craig
+Caughman",160,Lexington 03
+"Lexington
+School District
+Four","Lexington School District
+Four",3204999,607 East Fifth Street,Swansea,SC,29160,PK-12,3245,803-490-7000,https://www.lex4.org,"Robert
+Maddox, Jr.,
+Ed. D.",Brad Frick,224,Lexington 04
+"School District
+Five Of
+Lexington &
+Richland Count","School District Five Of
+Lexington & Richland
+Count",3205999,1020 Dutch Fork Rd.,Irmo,SC,29036,PK-12,16780,803-476-8000,https://www.lexrich5.org/,"Dr. Christina
+S. Melton","Mrs. Jan
+Hammond",1332,Lexington 05
+"Mccormick
+County School
+District","Mccormick County School
+District",3301999,821 North Mine Street,McCormick,SC,29835,PK-12,657,8648520639,http://mccormick.k12.sc.us,"Dr. Jaime
+Hembree","Verteema
+Chiles",51,McCormick 01
+"Marion County
+School District","Marion County School
+District",3410999,719 N Main Street,Marion,SC,29571,PK-12,4150,843-423-1811,https://www.marion.k12.sc.us/,"Dr. Kandace
+Bethea","Ogleretta
+White",301,Marion 10
+"Marlboro
+County School
+District","Marlboro County School
+District",3501999,122 Broad Street,Bennettsville,SC,29512,PK-12,3667,8434794016,http://www.marlboro.k12.sc.us/,"Dr. Gregory
+McCord",Larry McNeil,218,Marlboro 01
+"School District
+Of Newberry
+County","School District Of Newberry
+County",3601999,3419 Main Street,Newberry,SC,29108,PK-12,5760,8039248200,www.newberry.k12.sc.us,Jim Suber,"Lucy Ann
+Meetze",447,Newberry 01
+"School District
+Of Oconee
+County","School District Of Oconee
+County",3701999,414 S. Pine St.,Walhalla,SC,29691,PK-12,10168,864-886-4400,https://www.sdoc.org/,"Dr. Michael
+Thorsland","Denise
+McCormick",777,Oconee 01
+"Orangeburg
+County School
+District","Orangeburg County School
+District",3809999,102 Founders Court,Orangeburg,SC,29118,PK-12,11739,803-534-5454,www.ocsdsc.org,"Dr. Shawn
+Foster",Ruby Edwards,743,Orangeburg
+"School District
+Of Pickens
+County","School District Of Pickens
+County",3901999,1348 Griffin Mill Road,Easley,SC,29640,PK-12,15689,(864) 397-1000,http://www.pickens.k12.sc.us/,"Dr. Daniel B.
+Merck","Mr. Shannon
+Haskett",1009,Pickens 01
+"Richland School
+District One","Richland School District
+One",4001999,1616 Richland Street,Columbia,SC,29201,PK-12,22202,8032317000,www.richlandone.org,"Dr. Craig
+Witherspoon","Mr. Aaron
+Bishop",1922,Richland 01
+"Richland School
+District Two","Richland School District
+Two",4002999,763 Fashion Drive,Columbia,SC,29229,PK-12,27761,803-787-1910,www.richland2.org,"Dr. Baron R.
+Davis","Mr. James
+Manning",1960,Richland 02
+Saluda,Saluda,4101999,"404 North Wise
+Road",Saluda,SC,29138,PK-12,2315,NA,NA,"Dr. Harvey
+Livingston","Dr. Kathy
+Coleman",154,Saluda 01
+"Spartanburg
+School District
+One","Spartanburg School District
+One",4201999,121 Wheeler Street,Campobello,SC,29322,PK-12,5047,864-472-2846,https://www.spart1.org/,"Ronald W.
+Garner, Ed. D.",Travis Sloan,351,Spartanburg 01
+"Spartanburg
+School District
+Two","Spartanburg School District
+Two",4202999,3231 Old Furnace Rd,Chesnee,SC,29323,PK-12,10459,864-578-0128,https://www.spart2.org,"Mr. Lance
+Radford","Mr. Brandon
+McKillop",628,Spartanburg 02
+"Spartanburg
+School District
+Three","Spartanburg School District
+Three",4203999,"3535 Clifton Glendale
+Road",Spartanburg,SC,29307,PK-12,2629,864-279-6000,www.spartanburg3.org,"Mr. Kenny
+Blackwood","Mr. Chris
+Jolley",184,Spartanburg 03
+"Spartanburg
+School District
+Four","Spartanburg School District
+Four",4204999,"118 McEdco Road
+",Woodruff,SC,29388,PK-12,2718,864-476-3186,https://www.spartanburg4.org/,"Dr. W. Rallie
+Liston","Mr. Melvin
+Brewton",172,Spartanburg 04
+"Spartanburg
+School District 5","Spartanburg School District
+5",4205999,"Spartanburg School
+District Five
+100
+North Danzler Road",Duncan,SC,29334,PK-12,9028,864-949-2350,www.spart5.net,"Dr. Randall
+Gary","Mrs. Julie
+McMakin",642,Spartanburg 05
+"Spartanburg
+County School
+District Six","Spartanburg County School
+District Six",4206999,1390 Cavalier Way,Roebuck,SC,29376,PK-12,11254,864-576-4212,www.spart6.org,"Dr. Darryl
+Owings","Mr. Lynn
+Harris",755,Spartanburg 06
+"Spartanburg
+School District
+Seven","Spartanburg School District
+Seven",4207999,"610 Dupre Drive
+",Spartanburg,SC,29307,PK-12,7052,864-594-4400,www.spartanburg7.org,"Mr. Jeff
+Stevens","Mr. Sanders
+Lee",655,Spartanburg 07
+Sumter Schools,Sumter Schools,4301999,1345 Wilson Hall Road,Sumter,SC,29151,PK-12,15586,8034696900,http://sumterschools.net/,"Dr. Penelope
+Martin-Knox","Dr. Barbara R.
+Jackson",935,Sumter 01
+"Union County
+Schools",Union County Schools,4401999,130 West Main Street,Union,SC,29379,PK-12,3814,864-429-1740,www.union.k12.sc.us,"Mr. Joey
+Haney","Mr. Gene
+Lipsey",269,Union 01
+"Williamsburg
+County School
+District","Williamsburg County
+School District",4501999,"500 N. Academy
+Street",Kingstree,SC,29556,PK-12,3194,843-355-5571,www.wcsd.k12.sc.us,"Dr. Rose H.
+Wilder",N/A,198,Williamsburg 01
+"York School
+District One",York School District One,4601999,1475 East Liberty St,York,SC,29745,PK-12,4889,803-684-9916,www.york.k12.sc.us,Kelly Coxe,Diane Howell,362,York 01
+"Clover School
+District (York 2)","Clover School District (York
+2)",4602999,604 Bethel Street,Clover,SC,29710,PK-12,8372,803-810-8000,https://www.clover.k12.sc.us/,"Dr. Sheila
+Quinn","Mack
+McCarter",594,York 02
+"Rock Hill School
+District (York 3)","Rock Hill School District
+(York 3)",4603999,386 E. Black St.,Rock Hill,SC,29730,PK-12,16652,803-981-1000,https://www.rock-hill.k12.sc.us/,"Dr. William
+Cook",Helena Miller,1265,York 03
+"Fort Mill School
+District - York 4","Fort Mill School District -
+York 4",4604999,2233 Deerfield Dr.,Fort Mill,SC,29715,PK-12,16883,803-548-2527,http://www.fortmillschools.org,"James N.
+Epps, Jr.
+Ph.D.",Kristy Spears,1225,York 04
+"South Carolina
+Public Charter
+School District","South Carolina Public
+Charter School District",4701999,1824 Barnwell 29201,Columbia,SC,29201,PK-12,15773,8039609686,sccharter.org,Chris Neeley,John Payne,1096,"SC Public Charter School District
+"
+"Charter Institute
+At Erskine",Charter Institute At Erskine,4801999,"1201 Main Street
+Ste.
+300",Columbia,SC,29201,PK-12,23750,8038492465,https://erskinecharters.org/,"Cameron
+Runyan","Robert
+Gustafson",919,"Charter Institute at Erskine
+Erskine"
+"Governor's
+School For
+Agriculture At
+John De La
+Howe","Governor's School For
+Agriculture At John De La
+Howe",5205999,NA,NA,NA,NA,10-11,33,NA,NA,NA,NA,NA,John de la Howe
+"SC School For
+The Deaf And
+The Blind","SC School For The Deaf
+And The Blind",5207999,NA,NA,NA,NA,PK-12,173,NA,NA,NA,NA,92,SC School for the Deaf and the Blind
+"SC Governor's
+School For The
+Arts And
+Humanities","SC Governor's School For
+The Arts And Humanities",5364999,15 University Street,Greenville,SC,29601,10-12,228,864-282-3777,www.scgsah.org,"Cedric
+Adderley",Chad Prosser,8,"Governor's School for 
+the Arts and Humanities"
+"SC Governor's
+School for
+Science and
+Mathematics","SC Governor's School for
+Science and Mathematics",5395999,401 Railroad Avenue,Hartsville,SC,29550,11-12,261,843-383-3900,www.scgssm.org,"Mr. Daniel S.
+Dorsel","Mr. Robert
+Brown",24,Governor's School for Science and Mathematics

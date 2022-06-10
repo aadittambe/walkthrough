@@ -1,0 +1,212 @@
+district,school,school_id,gradespan,report_card_type_p_e_m_h_d,in_rc_main,in_hc,schooltypecd,in_rc_academic
+"Abbeville
+County School
+District",Long Cane Primary,0160020,PK-2,P,TRUE,NA,NA,NA
+"Allendale
+County Schools",Fairfax Elementary School,0301006,PK-2,P,TRUE,NA,NA,NA
+"Anderson
+School District
+One",Concrete Primary,0401006,PK-2,P,TRUE,NA,NA,NA
+"Anderson
+School District
+Two",Marshall Primary School,0402015,PK-2,P,TRUE,NA,NA,NA
+"Anderson
+School District
+Five","Homeland Park Primary
+School",0405047,PK-2,P,TRUE,NA,NA,NA
+"Barnwell School
+District 45",Barnwell Primary School,0645011,PK-3,P,TRUE,NA,NA,NA
+"Beaufort County
+School District","Hilton Head Island Early
+Childhood Center",0701031,PK-K,P,TRUE,NA,NA,NA
+"Berkeley County
+School District","Berkeley Elementary
+School",0801011,PK-2,P,TRUE,NA,NA,NA
+"Berkeley County
+School District","Sangaree Elementary
+School",0801023,PK-2,P,TRUE,NA,NA,NA
+"Berkeley County
+School District",Westview Primary,0801045,PK-2,P,TRUE,NA,NA,NA
+"Charleston
+County School
+District","Mary Ford Early Learning
+And Family Center",1001040,PK-K,P,TRUE,NA,NA,NA
+"Charleston
+County School
+District",Midland Park Primary,1001058,PK-K,P,TRUE,NA,NA,NA
+"Charleston
+County School
+District",Laurel Hill Primary,1001110,PK-2,P,TRUE,NA,NA,NA
+"Cherokee
+County School
+District 1",Blacksburg Primary School,1101025,PK-2,P,TRUE,NA,NA,NA
+"Chesterfield
+County School
+District",Cheraw Primary,1301012,PK-2,P,TRUE,NA,NA,NA
+"Chesterfield
+County School
+District",Petersburg Primary School,1301019,PK-2,P,TRUE,NA,NA,NA
+Clarendon 1,"Summerton Early
+Childhood Center",1401022,PK-2,P,TRUE,NA,NA,NA
+"Clarendon
+School District
+Two",Manning Primary School,1402012,2-3,P,TRUE,NA,NA,NA
+"Clarendon
+School District
+Two","Manning Early Childhood
+Center",1402014,PK-3,P,TRUE,NA,NA,NA
+"Colleton County
+School District","Black Street Early
+Childhood Center",1501008,PK-K,P,TRUE,NA,NA,NA
+"Darlington
+County School
+District",Pate Elementary School,1601018,PK-2,P,TRUE,NA,NA,NA
+"Darlington
+County School
+District","Southside Early Childhood
+Center",1601032,PK-K,P,TRUE,NA,NA,NA
+"Dillon School
+District Four",East Elementary School,1704007,PK-3,P,TRUE,NA,NA,NA
+"Dillon School
+District Four",South Elementary School,1704008,PK-3,P,TRUE,NA,NA,NA
+"Dillon School
+District Four","Stewart Heights
+Elementary School",1704011,PK-3,P,TRUE,NA,NA,NA
+"Florence School
+District Three","Lake City Early Childhood
+Center",2103050,PK-2,P,TRUE,NA,NA,NA
+"Georgetown
+County School
+District","Waccamaw Elementary
+School",2201024,PK-3,P,TRUE,NA,NA,NA
+"Greenwood
+School District
+52",Ninety Six Primary School,2452028,PK-2,P,TRUE,NA,NA,NA
+"Hampton
+District One",Varnville Elementary,2501009,PK-3,P,TRUE,NA,NA,NA
+"Hampton
+District One",Ben Hazel Primary,2501018,PK-3,P,TRUE,NA,NA,NA
+"Horry County
+Schools","Myrtle Beach Early
+Childhood School",2601072,PK-K,P,TRUE,NA,NA,NA
+"Horry County
+Schools","Myrtle Beach Primary
+School",2601073,1-2,P,TRUE,NA,NA,NA
+"Horry County
+Schools","Hcs Scholars Academy
+High School",2601075,9,H,TRUE,NA,NA,NA
+"Lexington
+County School
+District Three","Batesburg-Leesville
+Primary School",3203030,PK-2,P,TRUE,NA,NA,NA
+"Lexington
+School District
+Four",Sandhills Primary School,3204040,1-2,P,TRUE,NA,NA,NA
+"Lexington
+School District
+Four","Lexington Four Early
+Childhood Center",3204800,PK-K,P,TRUE,NA,NA,NA
+"Marion County
+School District",Easterling Primary,3410003,PK-2,P,TRUE,NA,NA,NA
+"Marion County
+School District","North Mullins Primary
+School",3410013,PK-2,P,TRUE,NA,NA,NA
+"Marlboro
+County School
+District","Bennettsville Primary
+School",3501012,PK-3,P,TRUE,NA,NA,NA
+"Orangeburg
+County School
+District",Edisto Primary School,3809026,PK–2,P,TRUE,NA,NA,NA
+"Orangeburg
+County School
+District",Rivelon Elementary,3809056,PK–2,P,TRUE,NA,NA,NA
+"School District
+Of Pickens
+County",Liberty Primary School,3901031,PK-2,P,TRUE,NA,NA,NA
+"Richland School
+District Two","Lake Carolina Elementary
+Lower Campus",4002089,PK-2,P,TRUE,NA,NA,NA
+Saluda,Saluda Primary School,4101007,PK-2,P,TRUE,NA,NA,NA
+"Spartanburg
+School District
+One",Inman Elementary School,4201010,PK-3,P,TRUE,NA,NA,NA
+"Spartanburg
+School District
+Four",Woodruff Primary School,4204040,PK-2,P,TRUE,NA,NA,NA
+Sumter Schools,Oakland Primary School,4301016,PK-1,P,TRUE,NA,NA,NA
+Sumter Schools,Shaw Heights Elementary,4301019,2-3,P,TRUE,NA,NA,NA
+"Williamsburg
+County School
+District","W.M. Anderson Primary
+School",4501013,PK-2,P,TRUE,NA,NA,NA
+"South Carolina
+Public Charter
+School District","Meyer Center For Special
+Children",4701049,PK-2,P,TRUE,NA,NA,NA
+"South Carolina
+Public Charter
+School District","Renaissance Collegiate
+Academy",4701058,K-3,P,TRUE,NA,NA,NA
+Anderson 05,West Market School of Early Ed.,0405800,NA,NA,NA,TRUE,NA,NA
+Anderson 05,South Fant School of Early Ed.,0405801,NA,NA,NA,TRUE,NA,NA
+Florence 01,"R.N. Beck Child Development 
+Center",2101800,NA,NA,NA,TRUE,NA,NA
+Florence 01,Child Dev Ctr at Woods Road,2101803,NA,NA,NA,TRUE,NA,NA
+Greenville 01,Riverside Middle,2301111,NA,NA,NA,TRUE,NA,NA
+Greenville 01,Overbrook Child Dev Ctr,2301801,NA,NA,NA,TRUE,NA,NA
+Greenwood 50,Westview Middle,2450029,NA,NA,NA,TRUE,NA,NA
+Greenwood 50,Greenwood ECC,2450800,NA,NA,NA,TRUE,NA,NA
+Hampton 01,Wade Hampton High,2501001,NA,NA,NA,TRUE,NA,NA
+Kershaw 01,Midway Elementary,2801019,NA,NA,NA,TRUE,NA,NA
+Laurens 56,M S Bailey Child Dev Ctr,3056018,NA,NA,NA,TRUE,NA,NA
+Laurens 56,Clinton Elem,3056019,NA,NA,NA,TRUE,NA,NA
+Lexington 01,Midway Elem,3201055,NA,NA,NA,TRUE,NA,NA
+Lexington 01,Pleasant Hill Elem,3201060,NA,NA,NA,TRUE,NA,NA
+Lexington 01,Centerville Elementary,3201072,NA,NA,NA,TRUE,NA,NA
+Lexington 02,Northside Middle,3202020,NA,NA,NA,TRUE,NA,NA
+Lexington 04,Swansea High Freshman Acad,3204037,NA,NA,NA,TRUE,NA,NA
+Marion 10,Palmetto Middle,3410009,NA,NA,NA,TRUE,NA,NA
+Marion 10,McCormick Elem,3410010,NA,NA,NA,TRUE,NA,NA
+Marion 10,Mullins ECC ANNEX,3410413,NA,NA,NA,TRUE,NA,NA
+Newberry 01,Whitmire Community Elem,3601021,NA,NA,NA,TRUE,NA,NA
+Oconee 01,Northside Elem,3701013,NA,NA,NA,TRUE,NA,NA
+Spartanburg 02,Oakland Elem,4202088,NA,NA,NA,TRUE,NA,NA
+Spartanburg 05,James F Byrnes Freshman Acad,4205093,NA,NA,NA,TRUE,NA,NA
+Spartanburg 07,District 7 Early Learning Ctr,4207800,NA,NA,NA,TRUE,NA,NA
+Sumter 01,Hillcrest Middle,4301004,NA,NA,NA,TRUE,NA,NA
+York 01,Jefferson Elem,4601008,NA,NA,NA,TRUE,NA,NA
+York 02,Bethel Elem,4602012,NA,NA,NA,TRUE,NA,NA
+York 03,Rosewood Elem,4603032,NA,NA,NA,TRUE,NA,NA
+York 03,Central Child Development Ctr,4603800,NA,NA,NA,TRUE,NA,NA
+Department of Juvenile Justice,"Empowerment and Enrichment 
+Academy",5208002,NA,NA,NA,TRUE,NA,NA
+Department of Juvenile Justice,Evaluation & Detention Ctr,5208003,NA,NA,NA,TRUE,NA,NA
+"Department of Corrections
+N04",Tyger River High,5209003,NA,NA,NA,TRUE,NA,NA
+"Department of Corrections
+N04",Kirkland High,5209005,NA,NA,NA,TRUE,NA,NA
+"Department of Corrections
+N04",MacDougall High,5209006,NA,NA,NA,TRUE,NA,NA
+"Department of Corrections
+N04",Wateree River High,5209009,NA,NA,NA,TRUE,NA,NA
+"Department of Corrections
+N04",Sara Babb High,5209011,NA,NA,NA,TRUE,NA,NA
+"Department of Corrections
+N04",Allendale,5209017,NA,NA,NA,TRUE,NA,NA
+"Department of Corrections
+N04",Broad River,5209018,NA,NA,NA,TRUE,NA,NA
+"Department of Corrections
+N04",Lee High,5209021,NA,NA,NA,TRUE,NA,NA
+"Department of Corrections
+N04",Trenton High,5209022,NA,NA,NA,TRUE,NA,NA
+"Department of Corrections
+N04",Ridgeland High,5209023,NA,NA,NA,TRUE,NA,NA
+"Department of Corrections
+N04",Turbeville High,5209024,NA,NA,NA,TRUE,NA,NA
+"Palmetto
+Unified School
+District",Palmetto Unified,5209001,9,H,TRUE,NA,NA,NA
+"Horry County
+Schools","Waccamaw Elementary
+School",2601042,NA,NA,NA,NA,E,TRUE
