@@ -8,7 +8,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
 ## Summary
-TK TK TK
+This notebook loads, transforms and cleans data from South Carolina Department of Education’s annual report cards, head counts and additional data files for the years 2017-2021. Academic performance data based on state tests is not available for 2020. (Tests were canceled that year because of COVID-19.)
 
 ## Load libraries
 ```{r}
@@ -1106,8 +1106,6 @@ school_av <- all_variables %>%
   left_join(school_hc_all_years, by = c("school_id", "year"))
 
 
-######### There are 88 NAs in the type column ... what to do with these entries? All but 2 are from the grad variables df and all but 1 of those are from 2017
-
 ```
 
 
@@ -1162,28 +1160,6 @@ school_full_data <- school_list_geocoded %>%
 
 
 
-
-## Aadit made this df for search script. Kara, feel free to revise and / or delete
-```{r}
-schools = school_full_data %>% 
-  select(school_id,school) %>% 
-  rename(id = school_id,
-         name = school) %>% 
-  mutate(type = "school") %>% 
-  distinct()
-
-districts = district_full_data %>% 
-  select(district_id, district) %>% 
-  rename(id = district_id,
-         name = district) %>% 
-  mutate(type = "district") %>% 
-  distinct()
-
-all_search = districts %>% 
-  bind_rows(schools)
-
-```
-
 ## Make key to variable names
 ```{r}
 vars_d = colnames(district_full_data)
@@ -1198,99 +1174,20 @@ variables_school = data.frame(variables = vars_s)
 
 ## Export data
 ```{r}
-
+# Canonical lists
 write_csv(district_list, "../data/processed/etl_district_list.csv")
 write_csv(school_list, "../data/processed/etl_school_list.csv")
 
+# Full data
 write_csv(district_full_data, "../data/processed/etl_district_full_data.csv")
 write_csv(school_full_data, "../data/processed/etl_school_full_data.csv")
 
-
+# Variable names
 write_csv(variables_district, "../data/processed/etl_variables_district.csv")
-write_csv(variables_school, "../data/processed/etl_variables_school")
+write_csv(variables_school, "../data/processed/etl_variables_school.csv")
 
 
-write_csv(all_search, "../data/processed/all_search.csv")
 
 ```
 
-
-
-
-############ IN PROGRESS, PROCEED WITH CAUTION ############
-
-### QUESTIONS
-```{r}
-# Students in poverty occurs in two locations. Are they the same?
-# Teacher salary appears in two different tabs in the additional info files. Are they the same?
-# Why are there only -1s in the percent expenditures for instruction in 2017 elementary?
-```
-
-
-# School list anti-joins to figure out what's missing from each dataset
-```{r}
-# Which schools are in report card main and not in report card academic tabs?
-missing_from_academic <- rc_main %>% 
-  anti_join(rc_academic, by = "school_id") %>% 
-  select(district, school, school_id, gradespan, type) %>% 
-  mutate(in_rc_main = "TRUE")
-  #*** Hcs Scholars Academy High School (Horry County Schools, id 2601075) is in report card main, but does not appear in academic achievement data.          (Confirmed with a manual search in the source data.)
-  #*There are 50 primary schools that appear in report card main and not academic. We are excluding them from the school key.
-  
-# Which schools are in report card academic and not report card main?
-missing_from_main <- rc_academic %>% 
-  anti_join(rc_main, by = "school_id") %>% 
-  select(district, school, school_id, schooltypecd) %>% 
-  mutate(in_rc_academic = "TRUE")
-  #*** The report card academic page includes Palmetto Unified as a high school (Palmetto Unified School District, id 5209001) but it is not in main. This is part of the Department of Corrections and we are excluding it from the school key.
-
-
-# Which schools are in headcount and not in report card main + academic?
-missing_from_rc_list <- school_hc_21 %>% 
-  anti_join(rc_list, by = "school_id") %>% 
-  select(district, school, school_id) %>% 
-  mutate(in_hc = "TRUE")
-  #*** There are 62 schools in the headcount that are not in rc_list. Most are "elementary schools" that include only K-2 or K-3. Since these are coded in rc_main as primary schools, they have dropped out at this stage. Swansea High Freshman Academy (id 3204037, grade 9 only) is also missing. We are going to exclude it for now while getting more info from Sara Gregory.
-
-
-
-# Which schools are in report card main + academic and not in headcount?
-missing_from_headcount <- rc_list %>% 
-  anti_join(school_hc_21, by = "school_id") %>% 
-  select(district.x, school.x, school_id, gradespan, type) %>% 
-  mutate(in_rc_list = "TRUE")
-  #*** There are no schools in report_card list that are not in headcount.
-
-
-# Which schools are in additional info main that aren't in report card main?
-# missing_from_main_y <- rc_main %>% 
-#   anti_join(ai_21_main, by = "school_id") %>% 
-#   select(district, school, school_id) %>% 
-#   mutate(in_hc = "TRUE")
-#*** The school list for additional info main is the same as report cards. We do not need to include this dataset in the joins for the school key.
-
-
-# Create df of missing schools
-missing_schools <- missing_from_academic %>% 
-  bind_rows(missing_from_academic_x) %>% 
-  bind_rows(missing_from_headcount) %>% 
-  bind_rows(missing_from_headcount_x) %>% 
-  bind_rows(missing_from_main) %>% 
-  bind_rows(missing_from_main_x) %>% 
-  distinct(school_id, .keep_all = TRUE)
-
-#write_csv(missing_schools, "../data/processed/etl_missing_schools.csv")
-
-
-
-# Create df of schools that are in all datasets
-schools_master <- rc_academic%>% 
-  inner_join(rc_main, by = "school_id") %>% 
-  inner_join(school_hc_21, by = "school_id")
-
-nrow(missing_schools)
-nrow(schools_master)
-
-```
-
-
+-30-
