@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pandas = "*"
+geopy = "*"
+numpy = "*"
+jupyterlab = "*"
+jupyter = "*"
+lab = "*"
+pyreadr = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"

@@ -1,0 +1,46 @@
+---
+title: "South Carolina Department of Education data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## Summary
+TK TK TK
+
+## Load libraries
+```{r}
+library(httr)
+library(tidyverse)
+library(jsonlite)
+library(janitor)
+library(parallel)
+library(readxl)
+library(rio)
+library(geojsonio)
+library(sf)
+
+```
+
+```{r}
+geometries = read_sf("../data/source/maps/School_District_Characteristics_2017-18.geojson") %>% 
+  clean_names() %>% 
+  select(lea_name, geometry) %>% 
+  rename(district_for_join = lea_name) 
+
+district_data = read_csv("../data/processed/etl_district_full_data.csv") %>% 
+  rename(district_for_join = district_alt) 
+
+joined_data = geometries %>% 
+  left_join(district_data)
+
+geojson_write(joined_data,file ="../data/processed/etl_district_full_data_with_geometries.geojson")
+
+```
+
+
+
+
+
