@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>South Carolina School Explorer</title>
+    <meta name="description" content="tktktkt">
+    <meta name="author" content="Aadit Tambe & Kara Newhouse">
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" /> -->
+
+    <link rel="stylesheet" href="https://use.typekit.net/kdc4trt.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="static/search.css">
+</head>
+
+<body>
+    <div id="container">
+        <div id="title">
+            <h1>South Carolina <span>Schools</span> Explorer</h1>
+            <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna
+                aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
+                id est laborum.
+            </h2>
+        </div> <!-- close title -->
+
+        <div class="app-search">
+            <div class="search-row">
+                <input id="fill-box" type="text" placeholder="Search school or district ...">
+                <i class="fa fa-search"></i>
+            </div>
+            <div class="search-eg">
+                <p>For example: </p> 
+                <p><a href="#">Abbeville County School District</a></p>
+                <p><a href="#">Iva Elementary School</a></p>
+                <p><a href="#">Cedar Springs Academy</a></p>
+            </div>
+        <div id="suggestions-list" class="list-items"></div>
+        </div>
+
+
+   
+
+        <div id='map' class="map-border"></div>
+
+        <h1>school data</h1>
+        <table border=1 cellpadding=7 id="data" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Total enrollment</th>
+                    <th>Boys</th>
+                    <th>Girls</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for school in school_object_list %}
+
+                <tr>
+                    <td><a href="school/{{ school.school_id }}/">{{ school.school_x }}</a></td>
+                    <td>{{ school.total_actively_enrolled_students }}</td>
+                    <td>{{ school.gender_female }}</td>
+                    <td>{{ school.gender_male }}</td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+
+    </div><!-- close container -->
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/chroma-js@2.1.2/chroma.js"></script>
+
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+
+    <-- fuse js -->
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.1"></script>
+
+    <!-- load d3 -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <-- search script -->
+    <script src="static/search.js"></script>
+
+    <!-- TEMP -->
+    <script>
+    searchApp("home")
+    </script>
+
+    <!-- leaflet map script -->
+    <script>
+        d3.json("static/district_demographic_join.geojson").then(function (loadedData) {
+            // console.log(loadedData);
+
+
+            var map = L.map('map', {
+                minZoom: 7,
+                maxZoom: 10,
+            }).setView([33.4, -81.1], 7);
+
+
+            L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWFkaXR0YW1iZSIsImEiOiJja3R2eDFjZjMyZXJxMnhwcTR0Y3F5eGk2In0.9AAyIXkTkCMcZ8NNlDPB9g', {
+                maxZoom: 18,
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+                    'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                id: 'mapbox/light-v9',
+                tileSize: 512,
+                zoomOffset: -1
+            }).addTo(map);
+
+            function getColorTotal(d, min = 15, mid = 50000, max = 76964, endColor = '#9264BA', midColor = 'black', startColor = '#82C566') {
+                const scale = chroma.scale([startColor, midColor, endColor]).domain([min, mid, max]);
+                return scale(d).hex();
+            }
+
+            function getColorGirls(d, min = 11, max = 37451, endColor = '#9264BA', startColor = '#82C566') {
+                const scale = chroma.scale([startColor, endColor]).domain([min, max]);
+                return scale(d).hex();
+            }
+
+            function getColorBoys(d, min = 264, max = 39513, endColor = '#9264BA', startColor = '#82C566') {
+                const scale = chroma.scale([startColor, endColor]).domain([min, max]);
+                return scale(d).hex();
+            }
+
+            function getColorUnknown(d, min = 0, max = 21, endColor = '#9264BA', startColor = '#82C566') {
+                const scale = chroma.scale([startColor, endColor]).domain([min, max]);
+                return scale(d).hex();
+            }
+            function style(feature) {
+                var property = parseFloat((feature.properties.total_students_enrolled)).toFixed(0);
+                // console.log(property)
+                return {
+                    fillColor: getColorTotal(property),
+                    weight: 2,
+                    opacity: 1,
+                    color: 'white',
+                    dashArray: '3',
+                    fillOpacity: 0.7
+                };
+            }
+
+
+
+            function onEachFeature(feature, layer) {
+                layer.bindPopup("<p style = \"text-align:center;\">" + '<strong>' + '<a href=' + "district/" + feature.properties.district_id + ">" + feature.properties.LEA_NAME + '</a></strong>' + " <br> Total students: " + parseFloat((feature.properties.total_students_enrolled)).toFixed(0));
+            }
+
+            var geojsonLayer = new L.geoJson(loadedData, { onEachFeature: onEachFeature, style: style });
+
+            geojsonLayer.addTo(map);
+
+            var totalLegend = L.control({ position: 'bottomright' });
+
+            totalLegend.onAdd = function (map) {
+                var div = L.DomUtil.create('div', 'info legend'),
+                    grades = [80000, 40000, 20000, 0],
+                    labels = [];
+
+                for (var i = 0; i < grades.length; i++) {
+                    // console.log(grades[i])
+                    div.innerHTML +=
+                        '<i style="background:' + getColorTotal(grades[i] + 1) + '"></i> ' +
+                        grades[i] + (grades[i] ? ' and ' + grades[i] + '<br>' : ' and less');
+                }
+
+                return div;
+            };
+
+            var boyLegend = L.control({ position: 'bottomright' });
+
+            boyLegend.onAdd = function (map) {
+                var div = L.DomUtil.create('div', 'info legend'),
+                    grades = [40000, 20000, 0],
+                    labels = [];
+
+                for (var i = 0; i < grades.length; i++) {
+                    // console.log(grades[i])
+                    div.innerHTML +=
+                        '<i style="background:' + getColorTotal(grades[i] + 1) + '"></i> ' +
+                        grades[i] + (grades[i] ? ' and ' + grades[i] + '<br>' : ' and less');
+                }
+
+                return div;
+            };
+
+
+            var girlLegend = L.control({ position: 'bottomright' });
+
+            girlLegend.onAdd = function (map) {
+                var div = L.DomUtil.create('div', 'info legend'),
+                    grades = [40000, 20000, 0],
+                    labels = [];
+
+                for (var i = 0; i < grades.length; i++) {
+                    // console.log(grades[i])
+                    div.innerHTML +=
+                        '<i style="background:' + getColorTotal(grades[i] + 1) + '"></i> ' +
+                        grades[i] + (grades[i] ? ' and ' + grades[i] + '<br>' : ' and less');
+                }
+
+                return div;
+            };
+
+            var unknownLegend = L.control({ position: 'bottomright' });
+
+            unknownLegend.onAdd = function (map) {
+                var div = L.DomUtil.create('div', 'info legend'),
+                    grades = [100, 40, 20],
+                    labels = [];
+
+                for (var i = 0; i < grades.length; i++) {
+                    // console.log(grades[i])
+                    div.innerHTML +=
+                        '<i style="background:' + getColorUnknown(grades[i] + 1) + '"></i> ' +
+                        grades[i] + (grades[i] ? ' and ' + grades[i] + '<br>' : ' and less');
+                }
+
+                return div;
+            };
+
+
+            var currentLegend = totalLegend;
+
+            var buttons = L.control({ position: 'topright' });
+
+            buttons.onAdd = function (map) {
+                var div = L.DomUtil.create('div', 'info legend');
+                div.innerHTML = '<div><button class="select1 active">Total</button><button class="select1">Boys</button><button class="select1">Girls</button><button class="select1">Unknown</button></div>';
+                div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
+                // console.log(div)
+                return div;
+            }
+
+            buttons.addTo(map)
+
+            $('.select1').click(function () {
+                // console.log(t    his)
+                $('.select1').css("background-color", "#F3F4F2")
+                $('.select1').css("color", "#262B28")
+                $(this).css("background-color", "#262B28")
+                $(this).css("color", "#F3F4F2")
+
+                var property;
+
+                if (this.innerText == "Total") {
+                    property = 'total_students_enrolled';
+
+                }
+                else if (this.innerText == "Girls") {
+                    property = "gender_female";
+
+                }
+
+                else if (this.innerText == "Boys") {
+                    property = "gender_male";
+
+                }
+
+                else if (this.innerText == "Unknown") {
+                    property = "gender_missing";
+
+                }
+
+                function styleTotal(feature) {
+
+                    property2 = parseFloat(feature['properties'][property]).toFixed(1);
+
+                    return {
+                        fillColor: getColorTotal(property2),
+                        weight: 2,
+                        opacity: 1,
+                        color: 'white',
+                        dashArray: '3',
+                        fillOpacity: 0.7
+                    };
+                }
+                function styleBoys(feature) {
+
+                    property2 = parseFloat(feature['properties'][property]).toFixed(1);
+
+                    return {
+                        fillColor: getColorBoys(property2),
+                        weight: 2,
+                        opacity: 1,
+                        color: 'white',
+                        dashArray: '3',
+                        fillOpacity: 0.7
+                    };
+                }
+
+                function styleGirls(feature) {
+
+                    property2 = parseFloat(feature['properties'][property]).toFixed(1);
+
+                    return {
+                        fillColor: getColorGirls(property2),
+                        weight: 2,
+                        opacity: 1,
+                        color: 'white',
+                        dashArray: '3',
+                        fillOpacity: 0.7
+                    };
+                }
+
+                function styleUnknown(feature) {
+
+                    property2 = parseFloat(feature['properties'][property]).toFixed(1);
+
+                    return {
+                        fillColor: getColorUnknown(property2),
+                        weight: 2,
+                        opacity: 1,
+                        color: 'white',
+                        dashArray: '3',
+                        fillOpacity: 0.7
+                    };
+                }
+
+
+                function onEachFeature2(feature, layer) {
+                    var updatedProperty
+
+                    if (property == "total_students_enrolled") {
+                        updatedProperty = "Total students"
+                    }
+
+                    if (property == "gender_male") {
+                        updatedProperty = "boys"
+                    }
+                    else if (property == "gender_female") {
+                        updatedProperty = "Girls"
+                    }
+                    else if (property == "gender_missing") {
+                        updatedProperty = "Unknown"
+                    }
+
+                    if (isNaN(feature['properties'][property]) == true) {
+                        layer.bindPopup("<p style = \"text-align:center;\">" + '<strong>' + feature.properties.LEA_NAME + '</strong>' + " <br>" + "Note: " + 'no data' + "</p>");
+                    } else {
+                        // console.log(updatedProperty)
+                        layer.bindPopup(`<p style = \"text-align:center;\"><strong><a href="district/${feature.properties.district_id}">${feature.properties.LEA_NAME}</a></strong><br>${updatedProperty}: ${parseFloat((feature['properties'][property])).toFixed(0)}`)
+                    }
+                }
+                if (this.innerText == "Total") {
+
+                    map.removeLayer(geojsonLayer);
+                    geojsonLayer = new L.geoJson(loadedData, { onEachFeature: onEachFeature2, style: styleTotal });
+                    geojsonLayer.addTo(map);
+
+                    map.removeControl(currentLegend);
+                    currentLegend = totalLegend;
+                    totalLegend.addTo(map);
+
+                }
+
+                else if (this.innerText == "Boys") {
+
+                    map.removeLayer(geojsonLayer);
+                    geojsonLayer = new L.geoJson(loadedData, { onEachFeature: onEachFeature2, style: styleBoys });
+                    geojsonLayer.addTo(map);
+
+                    map.removeControl(currentLegend);
+                    currentLegend = boyLegend;
+                    boyLegend.addTo(map);
+
+                }
+
+                else if (this.innerText == "Girls") {
+
+                    map.removeLayer(geojsonLayer);
+                    geojsonLayer = new L.geoJson(loadedData, { onEachFeature: onEachFeature2, style: styleGirls });
+                    geojsonLayer.addTo(map);
+
+                    map.removeControl(currentLegend);
+                    currentLegend = girlLegend;
+                    girlLegend.addTo(map);
+
+                }
+
+
+                else if (this.innerText == "Unknown") {
+
+                    map.removeLayer(geojsonLayer);
+                    geojsonLayer = new L.geoJson(loadedData, { onEachFeature: onEachFeature2, style: styleUnknown });
+                    geojsonLayer.addTo(map);
+
+                    map.removeControl(currentLegend);
+                    currentLegend = unknownLegend;
+                    unknownLegend.addTo(map);
+
+                }
+
+            })
+            map.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
+            currentLegend.addTo(map);
+        });
+
+
+    </script>
+
+    <!-- DataTables script -->
+    <script>
+        $(document).ready(function () {
+            $('#data').DataTable({
+                "order": [[1, "desc"]],
+            });
+        });
+    </script>
+</body>
+
+</html>

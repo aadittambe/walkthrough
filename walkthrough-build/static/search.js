@@ -8,7 +8,7 @@ function searchApp(pageType) {
     let loc;
     let mode;
     if (pageType == "district") {
-        loc = "../../"
+        loc = "../"
         mode = ""
     } else if (pageType == "home") {
         //console.log("hey")
